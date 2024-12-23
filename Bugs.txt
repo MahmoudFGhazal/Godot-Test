@@ -1,0 +1,14 @@
+Deixar o jogo mais fluido/velocidade
+Melhorar PixelArt - Tu é rum, melhore
+Animação
+Animação Arvore
+Animação Player
+Animação NPC
+Animação Porta
+Caixa do Menu
+
+5.5 Falas
+6 - Combate
+7 - Achar Pokemons
+8 - Resto do Menu
+9 - Cutscene

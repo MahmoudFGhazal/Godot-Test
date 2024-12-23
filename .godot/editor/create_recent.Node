@@ -1,0 +1,15 @@
+TileMap
+Node2D
+Node
+Sprite2D
+RayCast2D
+Area2D
+AnimationTree
+AnimationPlayer
+CharacterBody2D
+AnimatedSprite2D
+ColorRect
+CanvasLayer
+RichTextLabel
+TextureRect
+HBoxContainer

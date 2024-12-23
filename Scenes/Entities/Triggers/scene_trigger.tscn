@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://b22e7ahgm0yv"]
+
+[ext_resource type="Script" path="res://Scenes/Entities/Triggers/SceneTrigger.gd" id="1_4adih"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eb6ga"]
+size = Vector2(14, 14)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v4j2t"]
+size = Vector2(16, 16)
+
+[node name="SceneTrigger" type="Area2D"]
+scale = Vector2(5, 5)
+collision_layer = 8
+script = ExtResource("1_4adih")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(8, 8)
+shape = SubResource("RectangleShape2D_eb6ga")
+
+[node name="Collision" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collision"]
+position = Vector2(8, 8)
+shape = SubResource("RectangleShape2D_v4j2t")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

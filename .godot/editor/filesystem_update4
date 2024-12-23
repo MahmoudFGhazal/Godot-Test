@@ -1,0 +1,6 @@
+res://Scenes/Entities/TileMap.tscn
+res://Scenes/Entities/Characters/NPC/NPC.tscn
+res://Scenes/Entities/Characters/Player/Player.tscn
+res://Scenes/Entities/Objects/Grass/tall_grass.tscn
+res://Scenes/Entities/Triggers/scene_trigger.tscn
+res://Scenes/Scenes/teste.tscn
