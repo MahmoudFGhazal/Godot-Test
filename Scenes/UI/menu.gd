@@ -3,9 +3,15 @@ extends Control
 @onready var arrow = $NinePatchRect/TextureRect
 var currentOp = 0
 
-func _ready():
-	visible = false
-	z_index = 3
+
+func _process(delta):
+	
+	if Input.is_action_just_pressed("Pause") and !get_tree().paused:
+		pause()
+	elif Input.is_action_just_pressed("Pause") and get_tree().paused:
+		resume()
+	elif get_tree().paused:
+		Menu()
 
 func Menu():
 	if Input.is_action_just_pressed("Baixo"):
@@ -42,3 +48,12 @@ func Menu():
 		anitree.active = true
 		manager_scene.menuActive = false
 		await get_tree().create_timer(1).timeout
+
+func resume():
+	get_tree().paused = false
+	visible = false
+	
+func pause():
+	get_tree().paused = true
+	visible = true
+	

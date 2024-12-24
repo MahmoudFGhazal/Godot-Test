@@ -113,7 +113,6 @@ position = Vector2(-8, -8)
 script = ExtResource("1_0fx6n")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-z_index = -1
 texture_filter = 1
 texture = ExtResource("2_jvwxk")
 centered = false
@@ -121,6 +120,7 @@ hframes = 2
 
 [node name="Overlay" type="Sprite2D" parent="."]
 visible = false
+z_index = 1
 y_sort_enabled = true
 texture = ExtResource("3_ihkwq")
 centered = false

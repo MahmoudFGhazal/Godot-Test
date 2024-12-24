@@ -50,17 +50,7 @@ func _ready():
 	fade.size = get_viewport().size
 	
 
-func _process(delta):
-	if Input.is_action_just_pressed("Pause") and !manager_scene.menuActive:
-		manager_scene.menuActive = true
-		anitree.active = false
-		menu.visible = true
-	elif manager_scene.menuActive:
-		menu.Menu()
-
 func _physics_process(delta):
-	if manager_scene.menuActive:
-		return
 		
 	if entering_trigger:
 		transition(delta)

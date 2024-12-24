@@ -3,8 +3,6 @@ class_name ManagerScene extends Node
 var player: Player
 var ScenePath = "res://Scenes/Scenes/"
 
-var menuActive = false
-
 func changeScene(from, toSceneName: String):
 	player = from.get_node("Player")
 	player.get_parent().remove_child(player)

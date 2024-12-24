@@ -12,3 +12,9 @@ Caixa do Menu
 7 - Achar Pokemons
 8 - Resto do Menu
 9 - Cutscene
+
+Lista de Prioridade
+0 - Sombras/Tilemap.Floor
+1 - Player/NPC/TileMap.Objects
+2 - GrassOverlay
+3 - Menu/UI
