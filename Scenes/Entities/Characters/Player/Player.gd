@@ -23,6 +23,7 @@ var jumping_overledge = false
 @onready var sprite = $Sprite2D
 @onready var fade = $Camera2D/CanvasLayer/ColorRect
 @onready var collisionShape = $CollisionShape2D
+@onready var timer = $Timer
 
 var hasFadedtoBlack = false
 var hasFadedtoNormal = false
@@ -48,7 +49,11 @@ func _ready():
 	fade.set_position(Vector2(0,0))
 	fade.color = Color(0,0,0,0)
 	fade.size = get_viewport().size
-	
+	ControlTimer(5)
+
+func _process(delta: float) -> void:
+	print(timer.time_left)
+
 
 func _physics_process(delta):
 		
@@ -258,3 +263,10 @@ func transition(delta):
 func _on_animation_tree_animation_finished(anim_name):
 	if anim_name.begins_with("turn_"):
 		playerstate = State.Idle
+		
+
+func ControlTimer(time: float):
+	menu.pause()
+	timer.start(time)
+	await timer.timeout
+	menu.resume()

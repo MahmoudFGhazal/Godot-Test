@@ -5,7 +5,6 @@ Animação Arvore
 Animação Player
 Animação NPC
 Animação Porta
-Caixa do Menu
 
 5.5 Falas
 6 - Combate

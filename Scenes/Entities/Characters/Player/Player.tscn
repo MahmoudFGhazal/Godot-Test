@@ -746,3 +746,7 @@ offset_right = 120.0
 offset_bottom = -64.0
 grow_horizontal = 0
 grow_vertical = 0
+
+[node name="Timer" type="Timer" parent="."]
+process_mode = 3
+one_shot = true

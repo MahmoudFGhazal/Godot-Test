@@ -1,3 +1,4 @@
+Timer
 TileMap
 Node2D
 Node
@@ -12,4 +13,3 @@ ColorRect
 CanvasLayer
 RichTextLabel
 TextureRect
-HBoxContainer
