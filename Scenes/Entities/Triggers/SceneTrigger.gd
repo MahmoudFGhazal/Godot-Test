@@ -5,7 +5,6 @@ extends Area2D
 @export var sprite: Texture
 @export var hframes: int = 4
 
-
 var animatedSprite
 
 func _ready():
@@ -34,8 +33,7 @@ func _create_animeted_sprite():
 		
 	animatedSprite.frames = frames
 	animatedSprite.animation = "opening"
-		
-		
+
 func _on_body_entered(body):
 	if body is Player:
 		var callchange = Callable(self, "_change_scene")

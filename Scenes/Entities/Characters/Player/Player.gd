@@ -5,9 +5,9 @@ signal Player_entering_trigger
 signal Player_entered_trigger
 var entering_trigger = false
 
-const spd = 4
-const run_spd = 7.5
-const jump_spd = 6
+const spd = 3.85
+const run_spd = 6
+const jump_spd = 4.5
 const TileSize = 80
 var jumping_overledge = false
 
@@ -46,31 +46,17 @@ func _ready():
 	posinicial = position
 	shadow.visible = false
 	anistate.travel("Parado")
-	fade.set_position(Vector2(0,0))
-	fade.color = Color(0,0,0,0)
-	fade.size = get_viewport().size
-	ControlTimer(5)
-
-func _process(delta: float) -> void:
-	print(timer.time_left)
-
 
 func _physics_process(delta):
-		
 	if entering_trigger:
 		transition(delta)
 	elif playerstate == State.Turn:
-		checkAndUpdateState()
-		return
+		pass
 	elif playerstate == State.Idle:
 		inputPlayer()
 	elif playerstate == State.Walk or playerstate == State.Run:
 		move(delta)
 	else:
-		playerstate = State.Idle
-
-func checkAndUpdateState():
-	if(State.keys()[playerstate] != anistate.get_current_node()):
 		playerstate = State.Idle
 
 func updateAnimation():
@@ -89,7 +75,8 @@ func updateAnimation():
 	if (TestCollision(collisions.world) or (TestCollision(collisions.water) and playerstate != State.Swim)) and playerstate != State.Turn:
 		anitree.set("parameters/Parado/blend_position", blendPosition)
 		anistate.travel("Parado")
-		return
+	
+	
 	match playerstate:
 		State.Idle:
 			anitree.set("parameters/Parado/blend_position", blendPosition)
@@ -112,14 +99,16 @@ func inputPlayer():
 	if dir.x == 0:
 		dir.y = int(Input.is_action_pressed("Baixo")) - int(Input.is_action_pressed("Cima"))
 	if Input.is_action_just_pressed("Avançar") and TestCollision(collisions.water):
-		print("oi3")
+		print("water")
 		playerstate = State.Swim
+	
 	if dir != Vector2.ZERO:
-		if needtoturn():
-			playerstate = State.Turn
-		elif Input.is_action_pressed("Voltar"):
+		if Input.is_action_pressed("Voltar"):
+			needtoturn()
 			posinicial = position
 			playerstate = State.Run
+		elif needtoturn():
+			playerstate = State.Turn
 		else:
 			posinicial = position
 			playerstate = State.Walk
@@ -189,7 +178,7 @@ func move(delta):
 			shadow.visible = true
 			position = posinicial + TileSize * dir * nextTile
 			var input = dir.y * 8 * nextTile 
-			sprite.position.y = (- 4 - 1.2 * input + 0.087 * pow(input, 2))
+			sprite.position.y = (- 5 - 1.2 * input + 0.087 * pow(input, 2))
 	elif !TestCollision(collisions.world) and (!TestCollision(collisions.water) or playerstate == State.Swim):
 		nextTile += run_spd * delta if playerstate == State.Run else spd * delta
 		
@@ -258,15 +247,6 @@ func transition(delta):
 			entering_trigger = false
 	else:
 		position = posinicial + (TileSize * dir * nextTile)
-		
-
-func _on_animation_tree_animation_finished(anim_name):
-	if anim_name.begins_with("turn_"):
-		playerstate = State.Idle
-		
 
 func ControlTimer(time: float):
-	menu.pause()
 	timer.start(time)
-	await timer.timeout
-	menu.resume()

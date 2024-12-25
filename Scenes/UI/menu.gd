@@ -3,11 +3,10 @@ extends Control
 @onready var arrow = $NinePatchRect/TextureRect
 var currentOp = 0
 
-
 func _process(delta):
-	
 	if Input.is_action_just_pressed("Pause") and !get_tree().paused:
 		pause()
+		print("oi")
 	elif Input.is_action_just_pressed("Pause") and get_tree().paused:
 		resume()
 	elif get_tree().paused:
@@ -54,6 +53,7 @@ func resume():
 	visible = false
 	
 func pause():
+	print("tchau")
 	get_tree().paused = true
 	visible = true
 	

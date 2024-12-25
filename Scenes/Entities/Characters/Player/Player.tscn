@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=3 uid="uid://6iwencfbk6nu"]
+[gd_scene load_steps=60 format=3 uid="uid://6iwencfbk6nu"]
 
 [ext_resource type="Script" path="res://Scenes/Entities/Characters/Player/Player.gd" id="1_iajtl"]
 [ext_resource type="Texture2D" uid="uid://cgpgpv366qh86" path="res://Assets/Entities/Characters/Player/Red.png" id="2_bm258"]
@@ -285,7 +285,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_5h078"]
 resource_name = "turn_down"
-length = 0.15
+length = 0.16
 step = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -306,7 +306,7 @@ tracks/1/path = NodePath(".")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.15),
+"times": PackedFloat32Array(0.16),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -316,7 +316,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_vxv0p"]
 resource_name = "turn_left"
-length = 0.05
+length = 0.16
 step = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -325,10 +325,10 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.03),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [4, 3]
+"values": [4]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -349,7 +349,7 @@ tracks/2/path = NodePath(".")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0.05),
+"times": PackedFloat32Array(0.16),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -359,7 +359,7 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_kcsq3"]
 resource_name = "turn_right"
-length = 0.05
+length = 0.16
 step = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -368,10 +368,10 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.03),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [4, 3]
+"values": [4]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -392,7 +392,7 @@ tracks/2/path = NodePath(".")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0.05),
+"times": PackedFloat32Array(0.16),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -402,7 +402,7 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_nxlrg"]
 resource_name = "turn_up"
-length = 0.05
+length = 0.16
 step = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -411,10 +411,10 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.03),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [7, 6]
+"values": [7]
 }
 tracks/1/type = "method"
 tracks/1/imported = false
@@ -423,7 +423,7 @@ tracks/1/path = NodePath(".")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.05),
+"times": PackedFloat32Array(0.16),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -594,58 +594,6 @@ states/Walk/position = Vector2(480, 80)
 transitions = ["Parado", "Walk", SubResource("AnimationNodeStateMachineTransition_2jox0"), "Walk", "Parado", SubResource("AnimationNodeStateMachineTransition_jw8px"), "Parado", "Turn", SubResource("AnimationNodeStateMachineTransition_67dtp"), "Turn", "Parado", SubResource("AnimationNodeStateMachineTransition_lqhk4"), "Walk", "Turn", SubResource("AnimationNodeStateMachineTransition_dtv5v"), "Turn", "Walk", SubResource("AnimationNodeStateMachineTransition_5avh8"), "Start", "Baixo", SubResource("AnimationNodeStateMachineTransition_i1j4c"), "Start", "Parado", SubResource("AnimationNodeStateMachineTransition_5soel"), "Parado", "Run", SubResource("AnimationNodeStateMachineTransition_p5f2v"), "Run", "Turn", SubResource("AnimationNodeStateMachineTransition_whs0k"), "Run", "Parado", SubResource("AnimationNodeStateMachineTransition_s1ubj"), "Walk", "Run", SubResource("AnimationNodeStateMachineTransition_kuwuv"), "Run", "Walk", SubResource("AnimationNodeStateMachineTransition_mew75"), "Turn", "Run", SubResource("AnimationNodeStateMachineTransition_fh6wr")]
 graph_offset = Vector2(0, -32.1434)
 
-[sub_resource type="Animation" id="Animation_um56u"]
-resource_name = "FadetoBlack"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ColorRect:color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.7),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_iqvl5"]
-resource_name = "FadetoNormal"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ColorRect:color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.7),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_occat"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ColorRect:color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0, 0, 0, 1)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_qjkjo"]
-_data = {
-"FadetoBlack": SubResource("Animation_um56u"),
-"FadetoNormal": SubResource("Animation_iqvl5"),
-"RESET": SubResource("Animation_occat")
-}
-
 [node name="Player" type="CharacterBody2D"]
 y_sort_enabled = true
 texture_filter = 1
@@ -722,19 +670,6 @@ visible = false
 ignore_rotation = false
 position_smoothing_enabled = true
 position_smoothing_speed = 15.0
-
-[node name="CanvasLayer" type="CanvasLayer" parent="Camera2D"]
-
-[node name="ColorRect" type="ColorRect" parent="Camera2D/CanvasLayer"]
-offset_left = -8.0
-offset_top = -8.0
-color = Color(0, 0, 0, 1)
-metadata/_edit_use_anchors_ = true
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera2D/CanvasLayer"]
-libraries = {
-"": SubResource("AnimationLibrary_qjkjo")
-}
 
 [node name="Menu" parent="." instance=ExtResource("4_su5sd")]
 anchors_preset = 3
