@@ -15,18 +15,16 @@ func _create_animeted_sprite():
 	animatedSprite = AnimatedSprite2D.new()
 	add_child(animatedSprite)
 	
-	animatedSprite.position = Vector2(32,8)
+	animatedSprite.centered = false
 	
 	var frames = SpriteFrames.new()
 	
 	frames.add_animation("opening")
 	
 	var originalImage = sprite.get_image()
-	var frameWidth = sprite.get_width()
-	var frameHeight = sprite.get_height()
 	
 	for i in range(hframes):
-		var frameImage = Image.create(frameWidth, frameHeight, false, originalImage.get_format())
+		var frameImage = Image.create(16, 16, false, originalImage.get_format())
 		frameImage.blit_rect(originalImage, Rect2(i * 16, 0, 16, 16), Vector2(0,0))
 		var frameTexture = ImageTexture.create_from_image(frameImage)
 		frames.add_frame("opening", frameTexture)

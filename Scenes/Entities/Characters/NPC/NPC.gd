@@ -18,7 +18,7 @@ var state = States.idle
 var spawn
 var posinicial: Vector2
 var dir: Vector2
-var spd = 4
+var spd = 3.85
 var nextTile: float
 var TileSize = 80
 

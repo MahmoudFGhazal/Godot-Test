@@ -13,7 +13,7 @@ Animação Porta
 9 - Cutscene
 
 Lista de Prioridade
-0 - Sombras/Tilemap.Floor
+0 - Sombras/Tilemap.Floor/Grass
 1 - Player/NPC/TileMap.Objects
 2 - GrassOverlay
 3 - Menu/UI

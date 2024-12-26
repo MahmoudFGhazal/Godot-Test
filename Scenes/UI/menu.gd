@@ -3,7 +3,7 @@ extends Control
 @onready var arrow = $NinePatchRect/TextureRect
 var currentOp = 0
 
-func _process(delta):
+func _process(_unused_delta):
 	if Input.is_action_just_pressed("Pause") and !get_tree().paused:
 		pause()
 		print("oi")

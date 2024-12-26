@@ -44,7 +44,6 @@ var nextTile = 0.0
 func _ready():
 	sprite.visible = true
 	posinicial = position
-	shadow.visible = false
 	anistate.travel("Parado")
 
 func _physics_process(delta):
@@ -152,14 +151,16 @@ func move(delta):
 				hasFadedtoBlack = false
 				hasFadedtoNormal = false
 	elif (TestCollision(collisions.ledge) and facingstate == Facing.down and moving == typesofmoviment.none) or moving == typesofmoviment.jumping:
-		ray.global_position = Vector2(TileSize/2,TileSize/2) +posinicial + (2 * TileSize * dir)
+		ray.global_position = Vector2(TileSize/2.0,TileSize/2.0) +posinicial + (2 * TileSize * dir)
+		shadow.visible = true
 		if TestCollision(collisions.world):
+			shadow.visible = false
 			position = posinicial
 			moving = typesofmoviment.none
 			playerstate = State.Idle
 			ray.position = Vector2(8,8)
 			return
-		collisionShape.global_position = Vector2(TileSize/2,TileSize/2) + posinicial + (2 * TileSize * dir)
+		collisionShape.global_position = Vector2(TileSize/2.0,TileSize/2.0) + posinicial + (2 * TileSize * dir)
 		
 		nextTile += jump_spd * delta
 		

@@ -10,14 +10,14 @@ var inGrass = false
 func _ready():
 	grassOver.visible = false
 
-func _on_area_2d_body_entered(body):
+func _on_area_2d_body_entered(_unused_body):
 	inGrass = true
 	grassOver.visible = true
 	particulas.visible = true
 	ani.play("Stepped")
 	particulas.play()
 
-func _on_area_2d_body_exited(body):
+func _on_area_2d_body_exited(_unused_body):
 	inGrass = false
 	grassOver.visible = false
 	ani.play("Parado")
