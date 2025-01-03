@@ -1,11 +1,13 @@
 extends CharacterBody2D
 
 @export var sprite: Texture
+
 @export var walk: bool
 @export var dist: int
-
 enum FaceStates {down, up, left, right}
 @export var facing: FaceStates = FaceStates.down
+
+@export var fala: String
 
 enum States {idle, walking, turning}
 var state = States.idle
@@ -128,3 +130,7 @@ func collision():
 		return true
 	
 	return false
+
+func action():
+	var box =  get_tree().root.get_child(1).get_node("Player/UI/Texto")
+	box.visible = true

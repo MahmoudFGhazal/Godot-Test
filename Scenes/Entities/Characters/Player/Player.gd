@@ -16,9 +16,10 @@ var jumping_overledge = false
 @onready var ray = $RayCasts/RayCast2D
 @onready var ledge_ray = $RayCasts/LedgeRayCast2D
 @onready var Iray = $RayCasts/InterectRayCast2D
+@onready var action_ray = $RayCasts/ActionRayCast2D
 @onready var water_ray = $RayCasts/WaterRayCast2D
 @onready var shadow = $Shadow
-@onready var menu = $Menu
+@onready var menu = $UI/Menu
 @onready var camera = $Camera2D
 @onready var sprite = $Sprite2D
 @onready var fade = $Camera2D/CanvasLayer/ColorRect
@@ -28,7 +29,7 @@ var jumping_overledge = false
 var hasFadedtoBlack = false
 var hasFadedtoNormal = false
 
-enum collisions {world, ledge, interect, water}
+enum collisions {world, ledge, interect, action, water}
 enum State {Idle, Turn, Walk, Run, Swim}
 enum Facing {left, right, up, down}
 enum typesofmoviment {walking, jumping, none, swimming}
@@ -59,17 +60,7 @@ func _physics_process(delta):
 		playerstate = State.Idle
 
 func updateAnimation():
-	var blendPosition = Vector2.ZERO
-	
-	match facingstate:
-		Facing.left:
-			blendPosition = Vector2(-1, 0)
-		Facing.right:
-			blendPosition = Vector2(1, 0)
-		Facing.up:
-			blendPosition = Vector2(0, -1)
-		Facing.down:
-			blendPosition = Vector2(0, 1)
+	var blendPosition = getDirectionFace()
 	
 	if (TestCollision(collisions.world) or (TestCollision(collisions.water) and playerstate != State.Swim)) and playerstate != State.Turn:
 		anitree.set("parameters/Parado/blend_position", blendPosition)
@@ -97,9 +88,14 @@ func inputPlayer():
 		dir.x = int(Input.is_action_pressed("Direita")) - int(Input.is_action_pressed("Esquerda"))
 	if dir.x == 0:
 		dir.y = int(Input.is_action_pressed("Baixo")) - int(Input.is_action_pressed("Cima"))
-	if Input.is_action_just_pressed("Avançar") and TestCollision(collisions.water):
-		print("water")
-		playerstate = State.Swim
+	
+	if Input.is_action_just_pressed("Avançar"):
+		if(TestCollision(collisions.action)):
+			var collider = action_ray.get_collider()
+			if collider and collider.has_method("action"):
+				collider.action()
+			else:
+				print("nao deu")
 	
 	if dir != Vector2.ZERO:
 		if Input.is_action_pressed("Voltar"):
@@ -111,7 +107,6 @@ func inputPlayer():
 		else:
 			posinicial = position
 			playerstate = State.Walk
-			
 	else:
 		playerstate = State.Idle
 		
@@ -217,6 +212,11 @@ func TestCollision(type:collisions):
 			ledge_ray.force_raycast_update()
 			if ledge_ray.is_colliding():
 				return true
+		collisions.action:
+			action_ray.target_position = getDirectionFace() * 8
+			action_ray.force_raycast_update()
+			if action_ray.is_colliding():
+				return true
 		collisions.water:
 			water_ray.target_position = nextstep
 			water_ray.force_raycast_update()
@@ -224,6 +224,17 @@ func TestCollision(type:collisions):
 				return true
 	
 	return false
+
+func getDirectionFace():
+	match facingstate:
+		Facing.left:
+			return Vector2(-1, 0)
+		Facing.right:
+			return Vector2(1, 0)
+		Facing.up:
+			return Vector2(0, -1)
+		Facing.down:
+			return Vector2(0, 1)
 
 func transition(delta):
 	nextTile += spd * delta

@@ -1,15 +1,12 @@
-Deixar o jogo mais fluido/velocidade
-Melhorar PixelArt - Tu é rum, melhore
-Animação
-Animação Arvore
-Animação Player
-Animação NPC
-Animação Porta
+Parar Animação Arvore no pause
+Melhorar Sprite do Menu/Texto -> tamanho das letyras, espaçamento, posionamento
+Mudar para parado se eu n puder andar/N pdoer andar <-- acho q arrumei
+Arrumar Transition
 
 5.5 Falas
-6 - Combate
-7 - Achar Pokemons
-8 - Resto do Menu
+6 - Resto do Menu
+7 - Combate
+8 - Achar Pokemons
 9 - Cutscene
 
 Lista de Prioridade
@@ -17,3 +14,5 @@ Lista de Prioridade
 1 - Player/NPC/TileMap.Objects
 2 - GrassOverlay
 3 - Menu/UI
+
+256
