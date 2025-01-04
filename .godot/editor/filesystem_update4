@@ -1,5 +1,4 @@
 res://Scenes/Scenes/teste.tscn
-res://Scenes/Entities/Characters/Player/Player.gd
 res://Scenes/UI/menu.tscn
 res://Scenes/Entities/Characters/Player/Player.tscn
 res://Scenes/Entities/TileMap.tscn
@@ -7,5 +6,7 @@ res://Scenes/Entities/Objects/Grass/tall_grass.tscn
 res://Scenes/Entities/Characters/NPC/NPC.tscn
 res://Scenes/Entities/Triggers/scene_trigger.tscn
 res://Scenes/UI/texto.tscn
-res://Scenes/Entities/Characters/NPC/NPC.gd
 res://Bugs.txt
+res://Scenes/Entities/Characters/Player/Player.gd
+res://Scenes/ManagerScene.gd
+res://Scenes/Entities/Characters/NPC/NPC.gd

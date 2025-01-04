@@ -22,7 +22,6 @@ var jumping_overledge = false
 @onready var menu = $UI/Menu
 @onready var camera = $Camera2D
 @onready var sprite = $Sprite2D
-@onready var fade = $Camera2D/CanvasLayer/ColorRect
 @onready var collisionShape = $CollisionShape2D
 @onready var timer = $Timer
 
@@ -61,10 +60,11 @@ func _physics_process(delta):
 
 func updateAnimation():
 	var blendPosition = getDirectionFace()
-	
+
 	if (TestCollision(collisions.world) or (TestCollision(collisions.water) and playerstate != State.Swim)) and playerstate != State.Turn:
 		anitree.set("parameters/Parado/blend_position", blendPosition)
 		anistate.travel("Parado")
+		return
 	
 	
 	match playerstate:
@@ -82,6 +82,8 @@ func updateAnimation():
 			anistate.travel("Run")
 		_:
 			anistate.travel("Parado")
+			
+		
 
 func inputPlayer():
 	if dir.y == 0:
@@ -110,8 +112,8 @@ func inputPlayer():
 	else:
 		playerstate = State.Idle
 		
-	
 	updateAnimation()
+
 
 func needtoturn():
 	var newfacingdirection
@@ -192,6 +194,7 @@ func move(delta):
 		nextTile = 0.0
 		posinicial = position
 		moving = typesofmoviment.none
+
 
 func TestCollision(type:collisions):
 	var nextstep:Vector2 = dir * 8

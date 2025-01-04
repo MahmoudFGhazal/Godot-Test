@@ -1,7 +1,11 @@
 Parar Animação Arvore no pause
 Melhorar Sprite do Menu/Texto -> tamanho das letyras, espaçamento, posionamento
-Mudar para parado se eu n puder andar/N pdoer andar <-- acho q arrumei
 Arrumar Transition
+- Fazer a porta só abrir uma vez
+- Fazer o Fade
+- Fazer a conexão para sair/Animação
+- Arrumar animação
+
 
 5.5 Falas
 6 - Resto do Menu
@@ -15,4 +19,30 @@ Lista de Prioridade
 2 - GrassOverlay
 3 - Menu/UI
 
-256
+"x"x256
+
+
+
+func transition(delta):
+	nextTile += spd * delta
+	if nextTile >= 1:
+		if !hasFadedtoBlack:
+			$Camera2D/CanvasLayer/AnimationPlayer.play("FadetoBlack")
+			hasFadedtoBlack = true
+			sprite.visible = false
+		else: return
+		await manager_scene.timer(2)
+		if !hasFadedtoNormal:
+			playerstate = State.Idle
+			updateAnimation()
+			emit_signal("Player_entered_trigger")
+			sprite.visible = true
+			$Camera2D/CanvasLayer/AnimationPlayer.play("FadetoNormal")
+			hasFadedtoNormal = true
+		else: return
+		await manager_scene.timer(0.5)
+		if entering_trigger:
+			nextTile = 0.0
+			entering_trigger = false
+	else:
+		position = posinicial + (TileSize * dir * nextTile)
