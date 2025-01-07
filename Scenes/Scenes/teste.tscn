@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://bhkve08kpfxe"]
+[gd_scene load_steps=6 format=3 uid="uid://bhkve08kpfxe"]
 
 [ext_resource type="PackedScene" uid="uid://cxdu5cof5bqf2" path="res://Scenes/Entities/Characters/NPC/NPC.tscn" id="1_7lr6e"]
 [ext_resource type="PackedScene" uid="uid://k00s1oxfa3u4" path="res://Scenes/Entities/TileMap.tscn" id="1_jo5t2"]
-[ext_resource type="PackedScene" uid="uid://6iwencfbk6nu" path="res://Scenes/Entities/Characters/Player/Player.tscn" id="2_gp0ck"]
 [ext_resource type="Texture2D" uid="uid://c46nfhkt3a0ft" path="res://Assets/Entities/Characters/Principais/Garry/Garry.png" id="2_hcncp"]
 [ext_resource type="PackedScene" uid="uid://b22e7ahgm0yv" path="res://Scenes/Entities/Triggers/scene_trigger.tscn" id="3_ne0wj"]
 [ext_resource type="Texture2D" uid="uid://d1xdpt4rq4l5l" path="res://Assets/Entities/Objects/Tilesets/aniporta.png" id="4_wjse0"]
@@ -11,7 +10,7 @@
 y_sort_enabled = true
 
 [node name="Npc" parent="." instance=ExtResource("1_7lr6e")]
-position = Vector2(320, 0)
+position = Vector2(320, 7.62939e-06)
 sprite = ExtResource("2_hcncp")
 
 [node name="TileMap" parent="." instance=ExtResource("1_jo5t2")]
@@ -19,10 +18,9 @@ layer_0/tile_data = PackedInt32Array(65540, 0, 0, 4, 196608, 0, 3, 196608, 0, 2,
 layer_1/tile_data = PackedInt32Array(327682, 131073, 0, 327683, 196609, 0, 327684, 262145, 0)
 layer_2/tile_data = PackedInt32Array(-1, 1, 1, 131071, 1, 1, 262143, 1, 1, -262138, 2, 0)
 
-[node name="Player" parent="." instance=ExtResource("2_gp0ck")]
-position = Vector2(160, 80)
-
 [node name="SceneTrigger" parent="." instance=ExtResource("3_ne0wj")]
 position = Vector2(560, 1.52588e-05)
+connectedScene = "teste"
 hasAni = true
 sprite = ExtResource("4_wjse0")
+pos = Vector2i(560, 80)

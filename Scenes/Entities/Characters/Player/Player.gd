@@ -1,7 +1,6 @@
 extends CharacterBody2D
 class_name Player
 
-signal Player_entering_trigger
 signal Player_entered_trigger
 var entering_trigger = false
 
@@ -24,6 +23,7 @@ var jumping_overledge = false
 @onready var sprite = $Sprite2D
 @onready var collisionShape = $CollisionShape2D
 @onready var timer = $Timer
+@onready var fadeAni = $Camera2D/Transition/AnimationFade
 
 var hasFadedtoBlack = false
 var hasFadedtoNormal = false
@@ -47,6 +47,7 @@ func _ready():
 	anistate.travel("Parado")
 
 func _physics_process(delta):
+
 	if entering_trigger:
 		transition(delta)
 	elif playerstate == State.Turn:
@@ -82,8 +83,6 @@ func updateAnimation():
 			anistate.travel("Run")
 		_:
 			anistate.travel("Parado")
-			
-		
 
 func inputPlayer():
 	if dir.y == 0:
@@ -91,13 +90,19 @@ func inputPlayer():
 	if dir.x == 0:
 		dir.y = int(Input.is_action_pressed("Baixo")) - int(Input.is_action_pressed("Cima"))
 	
+	if Input.is_action_just_pressed("Teste"):
+
+		fadeAni.play("FadetoBlack")
+		print("oi")
+		await ControlTimer(1.0)
+		print("tchau")
+		fadeAni.play("FadetoNormal")
+	
 	if Input.is_action_just_pressed("Avançar"):
 		if(TestCollision(collisions.action)):
 			var collider = action_ray.get_collider()
 			if collider and collider.has_method("action"):
 				collider.action()
-			else:
-				print("nao deu")
 	
 	if dir != Vector2.ZERO:
 		if Input.is_action_pressed("Voltar"):
@@ -113,7 +118,6 @@ func inputPlayer():
 		playerstate = State.Idle
 		
 	updateAnimation()
-
 
 func needtoturn():
 	var newfacingdirection
@@ -143,7 +147,6 @@ func move(delta):
 		var collider = Iray.get_collider()
 		if collider is Area2D:
 			if !entering_trigger:
-				emit_signal("Player_entering_trigger")
 				entering_trigger = true
 				hasFadedtoBlack = false
 				hasFadedtoNormal = false
@@ -195,7 +198,6 @@ func move(delta):
 		posinicial = position
 		moving = typesofmoviment.none
 
-
 func TestCollision(type:collisions):
 	var nextstep:Vector2 = dir * 8
 	
@@ -243,20 +245,22 @@ func transition(delta):
 	nextTile += spd * delta
 	if nextTile >= 1:
 		if !hasFadedtoBlack:
-			$Camera2D/CanvasLayer/AnimationPlayer.play("FadetoBlack")
 			hasFadedtoBlack = true
+			fadeAni.play("FadetoBlack")
 			sprite.visible = false
-		else: return
-		await manager_scene.timer(2)
+			
+		await ControlTimer(3.0)
+		
 		if !hasFadedtoNormal:
+			hasFadedtoNormal = true
+			facingstate = Facing.down
 			playerstate = State.Idle
 			updateAnimation()
 			emit_signal("Player_entered_trigger")
 			sprite.visible = true
-			$Camera2D/CanvasLayer/AnimationPlayer.play("FadetoNormal")
-			hasFadedtoNormal = true
-		else: return
-		await manager_scene.timer(0.5)
+			await ControlTimer(1.0)
+			fadeAni.play("FadetoNormal")
+		
 		if entering_trigger:
 			nextTile = 0.0
 			entering_trigger = false
@@ -264,4 +268,10 @@ func transition(delta):
 		position = posinicial + (TileSize * dir * nextTile)
 
 func ControlTimer(time: float):
-	timer.start(time)
+	if !timer.is_stopped():
+		await timer.timeout
+		return
+	timer.stop()
+	timer.wait_time = time
+	timer.start()
+	await timer.timeout

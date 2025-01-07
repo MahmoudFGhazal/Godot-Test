@@ -4,6 +4,7 @@ extends Area2D
 @export var hasAni: bool
 @export var sprite: Texture
 @export var hframes: int = 4
+@export var pos: Vector2i = Vector2i(0,0)
 
 var animatedSprite
 
@@ -29,17 +30,22 @@ func _create_animeted_sprite():
 		var frameTexture = ImageTexture.create_from_image(frameImage)
 		frames.add_frame("opening", frameTexture)
 		
+	frames.set_animation_loop("opening", false)
+	
 	animatedSprite.frames = frames
 	animatedSprite.animation = "opening"
 
 func _on_body_entered(body):
+	if animatedSprite:
+		animatedSprite.play("opening")
+	
 	if body is Player:
-		var callchange = Callable(self, "_change_scene")
-		body.connect("Player_entered_trigger", callchange)
-		if animatedSprite:
-			animatedSprite.play("opening")
+		var connections = body.get_signal_connection_list("Player_entered_trigger")
+		if connections.size() == 0:
+			var callchange = Callable(self, "_change_scene")
+			body.connect("Player_entered_trigger", callchange)
 
 
 func _change_scene():
-	manager_scene.changeScene(get_owner(), connectedScene)
+	manager_scene.changeScene(get_owner(), connectedScene, pos)
 	
