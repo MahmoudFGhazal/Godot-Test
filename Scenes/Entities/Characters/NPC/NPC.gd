@@ -131,6 +131,7 @@ func collision():
 	
 	return false
 
+
 func action():
 	var box =  get_tree().root.get_child(1).get_node("Player/UI/Texto")
 	box.visible = true

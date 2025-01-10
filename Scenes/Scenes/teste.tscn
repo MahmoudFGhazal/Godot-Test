@@ -20,7 +20,7 @@ layer_2/tile_data = PackedInt32Array(-1, 1, 1, 131071, 1, 1, 262143, 1, 1, -2621
 
 [node name="SceneTrigger" parent="." instance=ExtResource("3_ne0wj")]
 position = Vector2(560, 1.52588e-05)
-connectedScene = "teste"
+connectedScene = "teste2"
 hasAni = true
 sprite = ExtResource("4_wjse0")
 pos = Vector2i(560, 80)

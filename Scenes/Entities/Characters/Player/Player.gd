@@ -47,7 +47,6 @@ func _ready():
 	anistate.travel("Parado")
 
 func _physics_process(delta):
-
 	if entering_trigger:
 		transition(delta)
 	elif playerstate == State.Turn:
@@ -91,11 +90,8 @@ func inputPlayer():
 		dir.y = int(Input.is_action_pressed("Baixo")) - int(Input.is_action_pressed("Cima"))
 	
 	if Input.is_action_just_pressed("Teste"):
-
 		fadeAni.play("FadetoBlack")
-		print("oi")
 		await ControlTimer(1.0)
-		print("tchau")
 		fadeAni.play("FadetoNormal")
 	
 	if Input.is_action_just_pressed("Avançar"):
@@ -245,11 +241,12 @@ func transition(delta):
 	nextTile += spd * delta
 	if nextTile >= 1:
 		if !hasFadedtoBlack:
+			Global.inCut = true
 			hasFadedtoBlack = true
 			fadeAni.play("FadetoBlack")
 			sprite.visible = false
 			
-		await ControlTimer(3.0)
+		await ControlTimer(1.0)
 		
 		if !hasFadedtoNormal:
 			hasFadedtoNormal = true

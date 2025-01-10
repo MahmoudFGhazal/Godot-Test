@@ -11,12 +11,12 @@ config_version=5
 [application]
 
 config/name="Pokemon"
-run/main_scene="res://Scenes/Scenes/teste.tscn"
+run/main_scene="res://Scenes/manager_scene.tscn"
 config/features=PackedStringArray("4.3", "Mobile")
 
 [autoload]
 
-manager_scene="*res://Scenes/ManagerScene.gd"
+Global="*res://Scenes/Global.gd"
 
 [display]
 

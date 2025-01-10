@@ -1,3 +1,4 @@
+Node
 AnimatedSprite2D
 AnimationPlayer
 Node2D
@@ -7,7 +8,6 @@ RayCast2D
 Control
 Timer
 TileMap
-Node
 Sprite2D
 Area2D
 AnimationTree

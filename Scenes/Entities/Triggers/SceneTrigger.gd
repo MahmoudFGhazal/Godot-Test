@@ -32,8 +32,26 @@ func _create_animeted_sprite():
 		
 	frames.set_animation_loop("opening", false)
 	
+	frames = SpriteFrames.new()
+	
+	frames.add_animation("closing")
+	
+	
+	
+	originalImage = sprite.get_image()
+	
+	for i in range(hframes-1, -1, -1):
+		var frameImage = Image.create(16, 16, false, originalImage.get_format())
+		frameImage.blit_rect(originalImage, Rect2(i * 16, 0, 16, 16), Vector2(0,0))
+		var frameTexture = ImageTexture.create_from_image(frameImage)
+		frames.add_frame("closing", frameTexture)
+		
+	frames.set_animation_loop("closing", false)
+	
 	animatedSprite.frames = frames
-	animatedSprite.animation = "opening"
+	animatedSprite.animation = "closing"
+	
+	frames.add_animation("closing")
 
 func _on_body_entered(body):
 	if animatedSprite:
@@ -45,7 +63,12 @@ func _on_body_entered(body):
 			var callchange = Callable(self, "_change_scene")
 			body.connect("Player_entered_trigger", callchange)
 
+func _on_body_exited(body: Node2D) -> void:
+	if body is Player:
+		if animatedSprite:
+			animatedSprite.play("closing")
+
 
 func _change_scene():
-	manager_scene.changeScene(get_owner(), connectedScene, pos)
+	Global.changeScene(get_owner(), connectedScene, pos)
 	

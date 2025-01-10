@@ -1,15 +1,14 @@
 Parar Animação Arvore no pause
 Melhorar Sprite do Menu/Texto -> tamanho das letyras, espaçamento, posionamento
 Arrumar Transition
-- Arrumar animação <-- dá para ver que o player teleporta, aumentar o tempo pro fadetonormal
-- A porta fica aberta depois de sair
-- Não deixar o player pausar durante o fading
+- Tempo do transition/Animação
+-fazer um reboot do codigo
 
 5.5 Falas
 6 - Resto do Menu
 7 - Combate
 8 - Achar Pokemons
-9 - Cutscene
+9 - Cutscene - fazer o player andar para fora da porta 
 
 Lista de Prioridade
 0 - Sombras/Tilemap.Floor/Grass

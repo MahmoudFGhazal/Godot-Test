@@ -4,9 +4,8 @@ extends Control
 var currentOp = 0
 
 func _process(_unused_delta):
-	if Input.is_action_just_pressed("Pause") and !get_tree().paused:
+	if Input.is_action_just_pressed("Pause") and !get_tree().paused and !Global.inCut:
 		pause()
-		print("oi")
 	elif Input.is_action_just_pressed("Pause") and get_tree().paused:
 		resume()
 	elif get_tree().paused:
@@ -40,20 +39,13 @@ func Menu():
 				print("opcoes")
 			6:
 				print("sair")
-	if Input.is_action_just_pressed("Pause") or Input.is_action_just_pressed("Voltar"):
-		visible = false
-		var player = get_parent()
-		var anitree = player.get_node("AnimationTree") 
-		anitree.active = true
-		manager_scene.menuActive = false
-		await get_tree().create_timer(1).timeout
+	
 
 func resume():
 	get_tree().paused = false
 	visible = false
 	
 func pause():
-	print("tchau")
 	get_tree().paused = true
 	visible = true
 	
