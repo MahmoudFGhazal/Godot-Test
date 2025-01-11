@@ -8,11 +8,11 @@ const spd = 3.85
 const run_spd = 6
 const jump_spd = 4.5
 const TileSize = 80
-var jumping_overledge = false
+var jumping = false
 
 @onready var anitree = $AnimationTree
 @onready var anistate = anitree.get("parameters/playback")
-@onready var ray = $RayCasts/RayCast2D
+@onready var ray = $RayCast2D
 @onready var ledge_ray = $RayCasts/LedgeRayCast2D
 @onready var Iray = $RayCasts/InterectRayCast2D
 @onready var action_ray = $RayCasts/ActionRayCast2D
@@ -31,11 +31,8 @@ var hasFadedtoNormal = false
 enum collisions {world, ledge, interect, action, water}
 enum State {Idle, Turn, Walk, Run, Swim}
 enum Facing {left, right, up, down}
-enum typesofmoviment {walking, jumping, none, swimming}
 var playerstate = State.Idle
 var facingstate = Facing.down 
-var moving = typesofmoviment.none
-
 
 var posinicial = Vector2(0,0)
 var dir = Vector2(0,0)
@@ -94,12 +91,6 @@ func inputPlayer():
 		await ControlTimer(1.0)
 		fadeAni.play("FadetoNormal")
 	
-	if Input.is_action_just_pressed("Avançar"):
-		if(TestCollision(collisions.action)):
-			var collider = action_ray.get_collider()
-			if collider and collider.has_method("action"):
-				collider.action()
-	
 	if dir != Vector2.ZERO:
 		if Input.is_action_pressed("Voltar"):
 			needtoturn()
@@ -111,26 +102,31 @@ func inputPlayer():
 			posinicial = position
 			playerstate = State.Walk
 	else:
+		if Input.is_action_just_pressed("Avançar"):
+			if(TestCollision(collisions.action)):
+				var collider = action_ray.get_collider()
+				if collider and collider.has_method("action"):
+					collider.action()
 		playerstate = State.Idle
 		
 	updateAnimation()
 
 func needtoturn():
-	var newfacingdirection
+	var oldfacingdirection
 	if dir.x < 0:
-		newfacingdirection = Facing.left
+		oldfacingdirection = Facing.left
 	elif dir.x > 0:
-		newfacingdirection = Facing.right
+		oldfacingdirection = Facing.right
 	elif dir.y < 0:
-		newfacingdirection = Facing.up
+		oldfacingdirection = Facing.up
 	elif dir.y > 0:
-		newfacingdirection = Facing.down
+		oldfacingdirection = Facing.down
 		
-	if facingstate != newfacingdirection:
-		facingstate = newfacingdirection
+	if facingstate != oldfacingdirection:
+		facingstate = oldfacingdirection
 		return true
 	else:
-		facingstate = newfacingdirection
+		facingstate = oldfacingdirection
 		return false
 
 func finishedturning():
@@ -146,13 +142,22 @@ func move(delta):
 				entering_trigger = true
 				hasFadedtoBlack = false
 				hasFadedtoNormal = false
-	elif (TestCollision(collisions.ledge) and facingstate == Facing.down and moving == typesofmoviment.none) or moving == typesofmoviment.jumping:
-		ray.global_position = Vector2(TileSize/2.0,TileSize/2.0) +posinicial + (2 * TileSize * dir)
+	elif (TestCollision(collisions.ledge) and facingstate == Facing.down) or jumping:
+		#se o player começar o pulo antes de terminar o movimento
+		if !jumping:
+			position.x = ceil(position.x / 80) * 80
+			position.y = ceil(position.y / 80) * 80
+			posinicial = position
+			nextTile = 0.0
+		
+		ray.global_position = Vector2(TileSize/2.0,TileSize/2.0) + posinicial + (2 * TileSize * dir)
 		shadow.visible = true
+		#para ver se tem alguma coisa depois do pulo
 		if TestCollision(collisions.world):
+			print("TGfd")
 			shadow.visible = false
 			position = posinicial
-			moving = typesofmoviment.none
+			jumping = false
 			playerstate = State.Idle
 			ray.position = Vector2(8,8)
 			return
@@ -165,13 +170,13 @@ func move(delta):
 			nextTile = 0.0
 			playerstate = State.Idle
 			shadow.visible = false
+			jumping = false
 			sprite.position = Vector2(8, -1)
 			ray.position = Vector2(8, 8)
 			collisionShape.position = Vector2(8, 8)
-			moving = typesofmoviment.none
 			return
 		else:
-			moving = typesofmoviment.jumping
+			jumping = true
 			shadow.visible = true
 			position = posinicial + TileSize * dir * nextTile
 			var input = dir.y * 8 * nextTile 
@@ -183,16 +188,13 @@ func move(delta):
 			position = posinicial + (TileSize * dir)
 			nextTile = 0.0
 			playerstate = State.Idle
-			moving = typesofmoviment.none
 			return
 		else:
-			moving = typesofmoviment.walking
 			position = posinicial + (TileSize * dir * nextTile)
 	else:
 		playerstate = State.Idle
 		nextTile = 0.0
 		posinicial = position
-		moving = typesofmoviment.none
 
 func TestCollision(type:collisions):
 	var nextstep:Vector2 = dir * 8
@@ -240,29 +242,35 @@ func getDirectionFace():
 func transition(delta):
 	nextTile += spd * delta
 	if nextTile >= 1:
-		if !hasFadedtoBlack:
-			Global.inCut = true
-			hasFadedtoBlack = true
-			fadeAni.play("FadetoBlack")
-			sprite.visible = false
-			
+		fadeBlack()
+		
 		await ControlTimer(1.0)
 		
-		if !hasFadedtoNormal:
-			hasFadedtoNormal = true
-			facingstate = Facing.down
-			playerstate = State.Idle
-			updateAnimation()
-			emit_signal("Player_entered_trigger")
-			sprite.visible = true
-			await ControlTimer(1.0)
-			fadeAni.play("FadetoNormal")
+		fadeNormal()
 		
 		if entering_trigger:
 			nextTile = 0.0
 			entering_trigger = false
 	else:
 		position = posinicial + (TileSize * dir * nextTile)
+
+func fadeBlack():
+	if !hasFadedtoBlack:
+		Global.inCut = true
+		hasFadedtoBlack = true
+		fadeAni.play("FadetoBlack")
+		sprite.visible = false
+
+func fadeNormal():
+	if !hasFadedtoNormal:
+		hasFadedtoNormal = true
+		facingstate = Facing.down
+		playerstate = State.Idle
+		updateAnimation()
+		emit_signal("Player_entered_trigger")
+		sprite.visible = true
+		await ControlTimer(1.0)
+		fadeAni.play("FadetoNormal")
 
 func ControlTimer(time: float):
 	if !timer.is_stopped():

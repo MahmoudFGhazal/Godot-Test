@@ -1,7 +1,5 @@
 Parar Animação Arvore no pause
 Melhorar Sprite do Menu/Texto -> tamanho das letyras, espaçamento, posionamento
-Arrumar Transition
-- Tempo do transition/Animação
 -fazer um reboot do codigo
 
 5.5 Falas

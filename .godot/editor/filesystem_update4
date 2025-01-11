@@ -1,13 +1,9 @@
-res://Scenes/manager_scene.tscn
-res://Scenes/ManagerScene.gd
 res://Scenes/Scenes/teste.tscn
+res://Scenes/Entities/Characters/Player/Player.gd
 res://Scenes/Scenes/teste2.tscn
 res://Scenes/Entities/Characters/Player/Player.tscn
 res://Scenes/Entities/Triggers/scene_trigger.tscn
-res://Scenes/global.gd
-res://Scenes/Entities/Characters/NPC/NPC.gd
-res://Scenes/Entities/Characters/Player/Player.gd
+res://Scenes/manager_scene.tscn
+res://Bugs.txt
 res://Scenes/Global.gd
 res://Scenes/UI/menu.gd
-res://Scenes/Entities/Triggers/SceneTrigger.gd
-res://Bugs.txt

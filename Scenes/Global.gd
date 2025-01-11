@@ -10,6 +10,7 @@ var map = "teste2"
 var currentMap: Node
 
 var inCut:bool = false
+var paused:bool = false
 
 func _ready() -> void:
 	initWorld(map, post)

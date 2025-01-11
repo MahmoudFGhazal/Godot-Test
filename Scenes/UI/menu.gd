@@ -4,11 +4,11 @@ extends Control
 var currentOp = 0
 
 func _process(_unused_delta):
-	if Input.is_action_just_pressed("Pause") and !get_tree().paused and !Global.inCut:
+	if Input.is_action_just_pressed("Pause") and !Global.paused and !Global.inCut:
 		pause()
-	elif Input.is_action_just_pressed("Pause") and get_tree().paused:
+	elif Input.is_action_just_pressed("Pause") and Global.paused:
 		resume()
-	elif get_tree().paused:
+	elif Global.paused:
 		Menu()
 
 func Menu():
@@ -44,8 +44,10 @@ func Menu():
 func resume():
 	get_tree().paused = false
 	visible = false
+	Global.paused = false
 	
 func pause():
 	get_tree().paused = true
 	visible = true
+	Global.paused = true
 	
