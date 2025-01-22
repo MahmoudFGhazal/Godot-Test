@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://cb2memhfni0ui"]
+[gd_scene load_steps=6 format=3 uid="uid://cb2memhfni0ui"]
 
 [ext_resource type="PackedScene" uid="uid://cxdu5cof5bqf2" path="res://Scenes/Entities/Characters/NPC/NPC.tscn" id="1_y21hs"]
 [ext_resource type="Texture2D" uid="uid://c46nfhkt3a0ft" path="res://Assets/Entities/Characters/Principais/Garry/Garry.png" id="2_0m348"]
 [ext_resource type="PackedScene" uid="uid://k00s1oxfa3u4" path="res://Scenes/Entities/TileMap.tscn" id="3_loynx"]
 [ext_resource type="PackedScene" uid="uid://b22e7ahgm0yv" path="res://Scenes/Entities/Triggers/scene_trigger.tscn" id="4_vln4i"]
+[ext_resource type="Texture2D" uid="uid://d1xdpt4rq4l5l" path="res://Assets/Entities/Objects/Tilesets/aniporta.png" id="5_sh5ge"]
 
 [node name="Teste2" type="Node2D"]
 y_sort_enabled = true
@@ -18,6 +19,8 @@ layer_1/tile_data = PackedInt32Array(327682, 131073, 0, 327683, 196609, 0, 32768
 layer_2/tile_data = PackedInt32Array(-1, 1, 1, 131071, 1, 1, 262143, 1, 1, -262138, 2, 0)
 
 [node name="SceneTrigger" parent="." instance=ExtResource("4_vln4i")]
-position = Vector2(560, 1.52588e-05)
+position = Vector2(560, 0)
 connectedScene = "teste"
+hasAni = true
+sprite = ExtResource("5_sh5ge")
 pos = Vector2i(560, 80)

@@ -1,3 +1,5 @@
+Label
+RichTextLabel
 Node
 AnimatedSprite2D
 AnimationPlayer
@@ -11,4 +13,3 @@ TileMap
 Sprite2D
 Area2D
 AnimationTree
-CharacterBody2D

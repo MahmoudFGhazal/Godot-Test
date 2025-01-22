@@ -1,12 +1,12 @@
 Parar Animação Arvore no pause
-Melhorar Sprite do Menu/Texto -> tamanho das letyras, espaçamento, posionamento
--fazer um reboot do codigo
+Menu -> Melhorar Seta
+Talvez tira o *9 no raycast
 
 5.5 Falas
+9 - Cutscene - fazer o player andar para fora da porta 
 6 - Resto do Menu
 7 - Combate
 8 - Achar Pokemons
-9 - Cutscene - fazer o player andar para fora da porta 
 
 Lista de Prioridade
 0 - Sombras/Tilemap.Floor/Grass

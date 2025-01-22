@@ -7,7 +7,7 @@ extends CharacterBody2D
 enum FaceStates {down, up, left, right}
 @export var facing: FaceStates = FaceStates.down
 
-@export var fala: String
+@export var actions: String
 
 enum States {idle, walking, turning}
 var state = States.idle
@@ -131,7 +131,8 @@ func collision():
 	
 	return false
 
-
 func action():
-	var box =  get_tree().root.get_child(1).get_node("Player/UI/Texto")
-	box.visible = true
+	if actions:
+		Global.cutScene(actions)
+	else:
+		print("Fudeu")

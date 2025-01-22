@@ -12,7 +12,7 @@ var jumping = false
 
 @onready var anitree = $AnimationTree
 @onready var anistate = anitree.get("parameters/playback")
-@onready var ray = $RayCast2D
+@onready var ray = $RayCasts/RayCast2D
 @onready var ledge_ray = $RayCasts/LedgeRayCast2D
 @onready var Iray = $RayCasts/InterectRayCast2D
 @onready var action_ray = $RayCasts/ActionRayCast2D
@@ -24,6 +24,7 @@ var jumping = false
 @onready var collisionShape = $CollisionShape2D
 @onready var timer = $Timer
 @onready var fadeAni = $Camera2D/Transition/AnimationFade
+@onready var texto = $UI/Texto
 
 var hasFadedtoBlack = false
 var hasFadedtoNormal = false
@@ -81,6 +82,10 @@ func updateAnimation():
 			anistate.travel("Parado")
 
 func inputPlayer():
+	if Global.inCut:
+		return
+	
+	
 	if dir.y == 0:
 		dir.x = int(Input.is_action_pressed("Direita")) - int(Input.is_action_pressed("Esquerda"))
 	if dir.x == 0:
@@ -104,9 +109,13 @@ func inputPlayer():
 	else:
 		if Input.is_action_just_pressed("Avançar"):
 			if(TestCollision(collisions.action)):
+				print("test")
 				var collider = action_ray.get_collider()
 				if collider and collider.has_method("action"):
 					collider.action()
+					print("foi")
+				else:
+					print("Sera")
 		playerstate = State.Idle
 		
 	updateAnimation()
@@ -154,7 +163,6 @@ func move(delta):
 		shadow.visible = true
 		#para ver se tem alguma coisa depois do pulo
 		if TestCollision(collisions.world):
-			print("TGfd")
 			shadow.visible = false
 			position = posinicial
 			jumping = false
@@ -181,7 +189,7 @@ func move(delta):
 			position = posinicial + TileSize * dir * nextTile
 			var input = dir.y * 8 * nextTile 
 			sprite.position.y = (- 5 - 1.2 * input + 0.087 * pow(input, 2))
-	elif !TestCollision(collisions.world) and (!TestCollision(collisions.water) or playerstate == State.Swim):
+	elif !TestCollision(collisions.world) and (!TestCollision(collisions.water) or playerstate == State.Swim) or (playerstate == State.Walk and nextTile != 0):
 		nextTile += run_spd * delta if playerstate == State.Run else spd * delta
 		
 		if nextTile >= 1.0:
@@ -197,7 +205,7 @@ func move(delta):
 		posinicial = position
 
 func TestCollision(type:collisions):
-	var nextstep:Vector2 = dir * 8
+	var nextstep:Vector2 = dir * 9
 	
 	match type:
 		collisions.world:
@@ -211,12 +219,12 @@ func TestCollision(type:collisions):
 			if Iray.is_colliding():
 				return true
 		collisions.ledge:
-			ledge_ray.target_position = nextstep
+			ledge_ray.target_position = nextstep / 1.125
 			ledge_ray.force_raycast_update()
 			if ledge_ray.is_colliding():
 				return true
 		collisions.action:
-			action_ray.target_position = getDirectionFace() * 8
+			action_ray.target_position = getDirectionFace() * 9
 			action_ray.force_raycast_update()
 			if action_ray.is_colliding():
 				return true
@@ -271,6 +279,8 @@ func fadeNormal():
 		sprite.visible = true
 		await ControlTimer(1.0)
 		fadeAni.play("FadetoNormal")
+		await ControlTimer(0.5)
+		Global.inCut = false
 
 func ControlTimer(time: float):
 	if !timer.is_stopped():
@@ -280,3 +290,7 @@ func ControlTimer(time: float):
 	timer.wait_time = time
 	timer.start()
 	await timer.timeout
+
+func callDialog(text: String):
+	texto.visible = true
+	texto.Texto(text)

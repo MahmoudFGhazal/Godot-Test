@@ -5,7 +5,7 @@ var player: Player
 var ScenePath = "res://Scenes/Scenes/"
 
 var post = Vector2i(160, 80)
-var map = "teste2"
+var map = "teste"
 
 var currentMap: Node
 
@@ -54,12 +54,57 @@ func changeScene(from: Node2D, toSceneName: String, pos: Vector2i):
 		currentMap = new_scene.instantiate()
 		player.position = pos
 		
-		main.call_deferred("remove_child", from)
-		main.call_deferred("add_child", currentMap)
-		
-		inCut = false
+		main.remove_child(from)
+		from.queue_free()
+		main.add_child(currentMap)
 	else:
 		push_error("Falha ao carregar")
 
 func getManager():
 	return get_tree().root.get_node("Manager Scene")
+
+#Instruções
+#\n = mudar caixa de dialogo
+#\d = andar direita
+#\b = andar baixo
+#\e = andar esquerda
+#\c = andar cima
+#Controlar Npcs?
+#\t = texto e aparecer caixa de dialogo
+#"" = dialogo depois do \t
+#\e = emojis Obs: futuramente
+#\w = esperar
+#como fazer para algo fazer duas coisas ao mesmo temPo? <- talvez uma função especifica para os npcs?
+
+func cutScene(actions: String = ""):
+	inCut = true
+	var i = 0
+	while i < actions.length():
+		if actions[i] == '\\':
+			i += 1
+			match actions[i]:
+				'n':
+					print("esperar input")
+				't':
+					var text = []
+					while actions[i] != "\\":
+						i+=1
+						if i < actions.length():
+							text.append(actions[i])
+						else:
+							break
+					text = arrayToString(text)
+					Dialog(text)
+					
+		i+=1
+
+func Dialog(text: String = "Aff"):
+	player.callDialog(text)
+	
+func arrayToString(array: Array):
+	var s = ""
+	for i in array:
+		s+=String(i)
+	print(s)
+	return s
+	

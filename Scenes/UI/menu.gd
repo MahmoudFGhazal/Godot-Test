@@ -3,7 +3,9 @@ extends Control
 @onready var arrow = $NinePatchRect/TextureRect
 var currentOp = 0
 
+
 func _process(_unused_delta):
+	
 	if Input.is_action_just_pressed("Pause") and !Global.paused and !Global.inCut:
 		pause()
 	elif Input.is_action_just_pressed("Pause") and Global.paused:
