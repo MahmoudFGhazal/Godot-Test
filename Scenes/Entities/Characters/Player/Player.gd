@@ -109,13 +109,9 @@ func inputPlayer():
 	else:
 		if Input.is_action_just_pressed("Avançar"):
 			if(TestCollision(collisions.action)):
-				print("test")
 				var collider = action_ray.get_collider()
 				if collider and collider.has_method("action"):
 					collider.action()
-					print("foi")
-				else:
-					print("Sera")
 		playerstate = State.Idle
 		
 	updateAnimation()
@@ -291,6 +287,7 @@ func ControlTimer(time: float):
 	timer.start()
 	await timer.timeout
 
-func callDialog(text: String):
+func callDialog(text):
+	texto.process_mode = Node.PROCESS_MODE_INHERIT
 	texto.visible = true
 	texto.Texto(text)

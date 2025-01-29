@@ -1,15 +1,14 @@
+Timer
+AnimatedSprite2D
 Label
 RichTextLabel
 Node
-AnimatedSprite2D
 AnimationPlayer
 Node2D
 ColorRect
 CanvasModulate
 RayCast2D
 Control
-Timer
 TileMap
 Sprite2D
 Area2D
-AnimationTree

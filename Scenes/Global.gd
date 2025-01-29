@@ -36,6 +36,22 @@ func initWorld(toSceneName: String, pos: Vector2i):
 	else:
 		push_error("Falha ao carregar")
 
+func lerjson(caminho: String) -> Dictionary:
+	var file = FileAccess.open(caminho, FileAccess.READ)
+	if file:
+		var conteudo = file.get_as_text()
+		var json = JSON.new()
+		var result = json.parse(conteudo)
+		
+		if result == OK:
+			return json.data
+		else:
+			print("Erro parsear JSON: ", json.get_error_message())
+			return{}
+	else:
+		print("Arquivo n encotnrado: ", caminho)
+		return {}
+
 func print_tre(node: Node = null, indent: int = 0) -> void:
 	if node == null:
 		node = get_tree().root  # Define o nó inicial como root, se não for fornecido
@@ -76,35 +92,35 @@ func getManager():
 #\w = esperar
 #como fazer para algo fazer duas coisas ao mesmo temPo? <- talvez uma função especifica para os npcs?
 
-func cutScene(actions: String = ""):
+enum typeActions {none, text, walk}
+var currentAction = typeActions.none
+
+func cutScene(caminho: String = ""):
+	var dados = lerjson(caminho)
+	var actions = dados["actions"]
+
 	inCut = true
 	var i = 0
 	while i < actions.length():
-		if actions[i] == '\\':
-			i += 1
-			match actions[i]:
-				'n':
-					print("esperar input")
-				't':
-					var text = []
-					while actions[i] != "\\":
-						i+=1
-						if i < actions.length():
-							text.append(actions[i])
-						else:
-							break
-					text = arrayToString(text)
-					Dialog(text)
+		match actions[i]:
+			'n':
+				i+=1
+			'<':
+				var text = []
+				i+=1
+				while actions[i] != '>':
+					text.append(actions[i])
+					i+=1
+				text.append(actions[i])
+				player.callDialog(text)
 					
 		i+=1
 
-func Dialog(text: String = "Aff"):
-	player.callDialog(text)
-	
 func arrayToString(array: Array):
 	var s = ""
 	for i in array:
 		s+=String(i)
-	print(s)
 	return s
-	
+
+func wait():
+	pass

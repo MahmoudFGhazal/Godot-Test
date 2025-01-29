@@ -1,6 +1,10 @@
 Parar Animação Arvore no pause
-Menu -> Melhorar Seta
+Menu -> Melhorar Seta e no caixa de dialogo
 Talvez tira o *9 no raycast
+poder colocar a cor do texto
+Animação na aparição das letras
+Fazer o primeiro input pular animação
+
 
 5.5 Falas
 9 - Cutscene - fazer o player andar para fora da porta 
