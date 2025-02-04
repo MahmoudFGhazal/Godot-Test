@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cmf5onrjukudt"
-path="res://.godot/imported/Seta.png-9b8f289d2912b164b92561d7a91d8c03.ctex"
+uid="uid://ujcyvtkr8v25"
+path="res://.godot/imported/option border.png-c1323a265724244601663ce9af3bb2bb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/UI/Seta.png"
-dest_files=["res://.godot/imported/Seta.png-9b8f289d2912b164b92561d7a91d8c03.ctex"]
+source_file="res://Assets/UI/option border.png"
+dest_files=["res://.godot/imported/option border.png-c1323a265724244601663ce9af3bb2bb.ctex"]
 
 [params]
 

@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://bxq4ex3tg3mb7" path="res://Assets/UI/Menu.png" id="1_fnv8t"]
 [ext_resource type="Script" path="res://Scenes/UI/menu.gd" id="1_ii3cj"]
 [ext_resource type="FontFile" uid="uid://cbrb6x63pxyif" path="res://Imports/pokemon_fire_red.ttf" id="2_18b64"]
-[ext_resource type="Texture2D" uid="uid://cmf5onrjukudt" path="res://Assets/UI/Seta.png" id="3_x7n5t"]
+[ext_resource type="Texture2D" uid="uid://ujcyvtkr8v25" path="res://Assets/UI/option border.png" id="4_ien3e"]
 
 [node name="Menu" type="Control"]
 process_mode = 3
@@ -37,9 +37,9 @@ patch_margin_bottom = 5
 [node name="VBoxContainer" type="VBoxContainer" parent="NinePatchRect"]
 layout_mode = 1
 offset_left = 17.0
-offset_top = 4.0
+offset_top = 7.0
 offset_right = 97.0
-offset_bottom = 186.0
+offset_bottom = 189.0
 theme_override_constants/separation = -10
 
 [node name="RichTextLabel" type="RichTextLabel" parent="NinePatchRect/VBoxContainer"]
@@ -58,13 +58,14 @@ Opcoes
 Sair"
 scroll_active = false
 
-[node name="TextureRect" type="TextureRect" parent="NinePatchRect"]
-texture_filter = 3
+[node name="SelectedOption" type="NinePatchRect" parent="NinePatchRect"]
 layout_mode = 0
-offset_left = 5.0
-offset_top = 6.5
-offset_right = 22.0
-offset_bottom = 23.5
-scale = Vector2(0.6, 0.6)
-texture = ExtResource("3_x7n5t")
-stretch_mode = 4
+offset_left = 10.0
+offset_top = 8.0
+offset_right = 61.0
+offset_bottom = 23.0
+texture = ExtResource("4_ien3e")
+patch_margin_left = 3
+patch_margin_top = 3
+patch_margin_right = 3
+patch_margin_bottom = 3

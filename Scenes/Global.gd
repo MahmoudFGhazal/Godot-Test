@@ -80,14 +80,15 @@ func getManager():
 	return get_tree().root.get_node("Manager Scene")
 
 #Instruções
-#\n = mudar caixa de dialogo
 #\d = andar direita
 #\b = andar baixo
 #\e = andar esquerda
 #\c = andar cima
+#\l = correr direita
+#\k = correr baixo
+#\j = correr esquerda
+#\i = correr cima
 #Controlar Npcs?
-#\t = texto e aparecer caixa de dialogo
-#"" = dialogo depois do \t
 #\e = emojis Obs: futuramente
 #\w = esperar
 #como fazer para algo fazer duas coisas ao mesmo temPo? <- talvez uma função especifica para os npcs?
@@ -103,8 +104,22 @@ func cutScene(caminho: String = ""):
 	var i = 0
 	while i < actions.length():
 		match actions[i]:
-			'n':
-				i+=1
+			'd':
+				await controlPlayer(Vector2(1,0))
+			'e':
+				await controlPlayer(Vector2(-1,0))
+			'b':
+				await controlPlayer(Vector2(0,1))
+			'c':
+				await controlPlayer(Vector2(0,-1))
+			'l':
+				await controlPlayer(Vector2(1,0), true)
+			'j':
+				await controlPlayer(Vector2(-1,0), true)
+			'k':
+				await controlPlayer(Vector2(0,1), true)
+			'i':
+				await controlPlayer(Vector2(0,-1), true)
 			'<':
 				var text = []
 				i+=1
@@ -112,9 +127,15 @@ func cutScene(caminho: String = ""):
 					text.append(actions[i])
 					i+=1
 				text.append(actions[i])
-				player.callDialog(text)
+				await player.callDialog(text)
 					
 		i+=1
+	inCut = false
+
+func controlPlayer(dir:Vector2i, run:bool = false):
+	player.statesControl(dir, run)
+	while player.playerstate != player.State.Idle:
+		await player.get_tree().process_frame
 
 func arrayToString(array: Array):
 	var s = ""

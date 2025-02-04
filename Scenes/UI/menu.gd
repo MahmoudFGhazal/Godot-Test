@@ -1,6 +1,6 @@
 extends Control
 
-@onready var arrow = $NinePatchRect/TextureRect
+@onready var arrow = $NinePatchRect/SelectedOption
 var currentOp = 0
 
 
@@ -23,7 +23,7 @@ func Menu():
 			currentOp = 5
 		else:
 			currentOp-=1
-	arrow.position.y = 6.5 + currentOp * 14
+	arrow.position.y = 8 + currentOp * 14
 	if Input.is_action_just_pressed("Avançar"):
 		match currentOp:
 			0:

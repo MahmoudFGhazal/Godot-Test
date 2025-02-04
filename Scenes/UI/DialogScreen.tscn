@@ -1,20 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://cqgnd44fy1rl6"]
+[gd_scene load_steps=4 format=3 uid="uid://cqgnd44fy1rl6"]
 
 [ext_resource type="Script" path="res://Scenes/UI/dialog_screen.gd" id="1_wvaor"]
 [ext_resource type="Texture2D" uid="uid://do8ufvmebbr0e" path="res://Assets/UI/Text.png" id="2_880ay"]
 [ext_resource type="FontFile" uid="uid://cbrb6x63pxyif" path="res://Imports/pokemon_fire_red.ttf" id="3_82kx1"]
-[ext_resource type="Texture2D" uid="uid://d0fivetec6a1c" path="res://Assets/UI/Seta-Text.png" id="4_bfpo1"]
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_2m1po"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("4_bfpo1")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
 
 [node name="DialogScreen" type="Control"]
 process_mode = 4
@@ -35,7 +23,6 @@ grow_vertical = 0
 script = ExtResource("1_wvaor")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
-clip_contents = true
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -47,9 +34,9 @@ offset_bottom = 50.0
 grow_horizontal = 2
 grow_vertical = 0
 texture = ExtResource("2_880ay")
-patch_margin_left = 12
+patch_margin_left = 11
 patch_margin_top = 12
-patch_margin_right = 12
+patch_margin_right = 11
 patch_margin_bottom = 12
 
 [node name="RichTextLabel" type="RichTextLabel" parent="NinePatchRect"]
@@ -69,12 +56,8 @@ theme_override_colors/default_color = Color(0.188235, 0.313726, 0.784314, 1)
 theme_override_constants/line_separation = 3
 theme_override_fonts/normal_font = ExtResource("3_82kx1")
 theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
 scroll_active = false
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="NinePatchRect"]
-visible = false
-position = Vector2(242, 40)
-sprite_frames = SubResource("SpriteFrames_2m1po")
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.1

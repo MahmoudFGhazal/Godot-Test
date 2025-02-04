@@ -8,8 +8,9 @@ var already = false
 
 func _process(_unusual_delta):
 	if !already:
-		await Global.player.ControlTimer(0.7)
+		await Global.player.ControlTimer(0.3)
 		already = true
+
 	if Input.is_action_just_pressed("Avançar") and already: 
 		already = false
 		if waitinput:
@@ -19,11 +20,12 @@ func _process(_unusual_delta):
 				Global.inCut = false
 				visible = false
 				index = 0
-				process_mode = Node.PROCESS_MODE_PAUSABLE
+				Global.player.emitSignalText()
+				process_mode = Node.PROCESS_MODE_DISABLED
 			else:
 				timer.start()
 		elif !timer.is_stopped():
-			box.text = allText[index]
+			box.text = Global.arrayToString(allText[index])
 			letter = 0
 			index += 1
 			waitinput = true
@@ -33,33 +35,45 @@ func Texto(text):
 	var istext = true
 	var currentBox: Array
 	var boxName = []
+	var nameColor = []
 	var naming = false
+	var iscolor = false
 	allText.clear()
 	
 	for i in text:
 		if !istext:
 			match i:
 				"b":
-					var boxText:String = Global.arrayToString(currentBox)
-					allText.append(boxText)
+					allText.append(currentBox.duplicate())
 					currentBox.clear()
 			istext = true
 		elif i == "\\":
 			istext = false
 		elif i == '>':
-			var boxText:String = Global.arrayToString(currentBox)
-			allText.append(boxText)
+			allText.append(currentBox.duplicate())
 			currentBox.clear()
 			istext = false
 		elif i == ")":
 			boxName.append(": ")
-			boxName = Global.arrayToString(boxName)
 			naming = false
-			currentBox.append(boxName)
+			for p in boxName:
+				currentBox.append(p)
 		elif i == "(":
+			boxName.clear()
 			naming = true
 		elif naming:
 			boxName.append(i)
+		elif i == "]":
+			nameColor.append(i)
+			nameColor = Global.arrayToString(nameColor)
+			iscolor = false
+			currentBox.append(nameColor)
+			nameColor = []
+		elif i == "[":
+			nameColor.append(i)
+			iscolor = true
+		elif iscolor:
+			nameColor.append(i)
 		else:
 			currentBox.append(i)
 	currentBox.clear()
@@ -69,11 +83,11 @@ var index = 0
 var letter = 0
 
 func _on_timer_timeout() -> void:
-	var currentletters:String = allText[index]
+	var currentbox:Array = allText[index]
 	waitinput = false
-	if letter < currentletters.length():
+	if letter < currentbox.size():
 		waitinput = false
-		box.text += currentletters[letter]
+		box.text += currentbox[letter]
 		letter += 1
 	elif index < allText.size():
 		index+=1

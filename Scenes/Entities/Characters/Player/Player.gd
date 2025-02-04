@@ -36,7 +36,7 @@ var playerstate = State.Idle
 var facingstate = Facing.down 
 
 var posinicial = Vector2(0,0)
-var dir = Vector2(0,0)
+var dir = Vector2(0,1)
 var nextTile = 0.0
 
 func _ready():
@@ -45,6 +45,7 @@ func _ready():
 	anistate.travel("Parado")
 
 func _physics_process(delta):
+	updateAnimation()
 	if entering_trigger:
 		transition(delta)
 	elif playerstate == State.Turn:
@@ -85,27 +86,22 @@ func inputPlayer():
 	if Global.inCut:
 		return
 	
-	
-	if dir.y == 0:
-		dir.x = int(Input.is_action_pressed("Direita")) - int(Input.is_action_pressed("Esquerda"))
-	if dir.x == 0:
-		dir.y = int(Input.is_action_pressed("Baixo")) - int(Input.is_action_pressed("Cima"))
+	var inputdir = Vector2(0, 0)
+	if inputdir.y == 0:
+		inputdir.x = int(Input.is_action_pressed("Direita")) - int(Input.is_action_pressed("Esquerda"))
+	if inputdir.x == 0:
+		inputdir.y = int(Input.is_action_pressed("Baixo")) - int(Input.is_action_pressed("Cima"))
 	
 	if Input.is_action_just_pressed("Teste"):
 		fadeAni.play("FadetoBlack")
 		await ControlTimer(1.0)
 		fadeAni.play("FadetoNormal")
 	
-	if dir != Vector2.ZERO:
+	if inputdir != Vector2.ZERO:
 		if Input.is_action_pressed("Voltar"):
-			needtoturn()
-			posinicial = position
-			playerstate = State.Run
-		elif needtoturn():
-			playerstate = State.Turn
+			statesControl(inputdir, true)
 		else:
-			posinicial = position
-			playerstate = State.Walk
+			statesControl(inputdir)
 	else:
 		if Input.is_action_just_pressed("Avançar"):
 			if(TestCollision(collisions.action)):
@@ -115,6 +111,20 @@ func inputPlayer():
 		playerstate = State.Idle
 		
 	updateAnimation()
+
+func statesControl(direc:Vector2, run:bool = false):
+	dir = direc
+	
+	posinicial = position
+	if run:
+		needtoturn()
+		playerstate = State.Run
+	else:
+		if needtoturn():
+			playerstate = State.Turn
+			return
+		playerstate = State.Walk
+		
 
 func needtoturn():
 	var oldfacingdirection
@@ -138,7 +148,6 @@ func finishedturning():
 	playerstate = State.Idle
 
 func move(delta):
-	updateAnimation()
 	
 	if TestCollision(collisions.interect):
 		var collider = Iray.get_collider()
@@ -199,6 +208,8 @@ func move(delta):
 		playerstate = State.Idle
 		nextTile = 0.0
 		posinicial = position
+		
+	updateAnimation()
 
 func TestCollision(type:collisions):
 	var nextstep:Vector2 = dir * 9
@@ -291,3 +302,9 @@ func callDialog(text):
 	texto.process_mode = Node.PROCESS_MODE_INHERIT
 	texto.visible = true
 	texto.Texto(text)
+	await textFinished
+
+signal textFinished
+
+func emitSignalText():
+	emit_signal("textFinished")
