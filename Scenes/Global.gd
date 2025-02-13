@@ -93,55 +93,129 @@ func getManager():
 #\w = esperar
 #como fazer para algo fazer duas coisas ao mesmo temPo? <- talvez uma função especifica para os npcs?
 
-enum typeActions {none, text, walk}
-var currentAction = typeActions.none
-
 func cutScene(caminho: String = ""):
 	var dados = lerjson(caminho)
 	var actions = dados["actions"]
-
 	inCut = true
-	var i = 0
-	while i < actions.length():
-		match actions[i]:
-			'd':
-				await controlPlayer(Vector2(1,0))
-			'e':
-				await controlPlayer(Vector2(-1,0))
-			'b':
-				await controlPlayer(Vector2(0,1))
-			'c':
-				await controlPlayer(Vector2(0,-1))
-			'l':
-				await controlPlayer(Vector2(1,0), true)
-			'j':
-				await controlPlayer(Vector2(-1,0), true)
-			'k':
-				await controlPlayer(Vector2(0,1), true)
-			'i':
-				await controlPlayer(Vector2(0,-1), true)
-			'<':
-				var text = []
-				i+=1
-				while actions[i] != '>':
-					text.append(actions[i])
-					i+=1
-				text.append(actions[i])
-				await player.callDialog(text)
-					
-		i+=1
+	
+	for action_group in actions:
+		for action_data in action_group:
+			executeAction(action_data)
+		
+		await await_all(action_group.size())
 	inCut = false
 
-func controlPlayer(dir:Vector2i, run:bool = false):
+var completed_count = 0
+
+func await_all(size):
+	var on_completed = func():
+		completed_count+=1
+	
+	self.connect("completed", on_completed)
+	
+	while completed_count < size:
+		await self.completed
+		
+	completed_count = 0
+	self.disconnect("completed", on_completed)
+
+signal completed
+
+func executeAction(action_data):
+	var character = action_data["character"]
+	var action = action_data["action"]
+	
+	if character == "player":
+		await executePlayerAction(action)
+	elif character.is_valid_int():
+		var NPC = searchNPC(character)
+		print(NPC)
+		await player.ControlTimer(0.1)
+	
+	emit_signal("completed")
+
+func executePlayerAction(action_data):
+	var i = 0
+	while i < action_data.length():
+		match action_data[i]:
+				'd':
+					await controlPlayer(Vector2(1,0))
+				'a':
+					await controlPlayer(Vector2(-1,0))
+				's':
+					await controlPlayer(Vector2(0,1))
+				'w':
+					await controlPlayer(Vector2(0,-1))
+				'l':
+					await controlPlayer(Vector2(1,0), true)
+				'j':
+					await controlPlayer(Vector2(-1,0), true)
+				'k':
+					await controlPlayer(Vector2(0,1), true)
+				'i':
+					await controlPlayer(Vector2(0,-1), true)
+				'e':
+					var time = ""
+					i+=1
+					while i < action_data.length() and (action_data[i].is_valid_int() or action_data[i] == "."):
+						time += action_data[i]
+						i+=1
+					var timeWait: float = convertType(time, Types.float)
+					print("oi")
+					await player.ControlTimer(timeWait)
+					print("oi")
+					continue
+				'<':
+					var text = []
+					i+=1
+					while i < action_data.length() and action_data[i] != '>':
+						text.append(action_data[i])
+						i+=1
+					text.append(action_data[i])
+					await player.callDialog(text)
+		i+=1
+
+func executeNPCAction(NPC, action_data):
+	pass
+
+func controlPlayer(dir:Vector2, run:bool = false):
 	player.statesControl(dir, run)
 	while player.playerstate != player.State.Idle:
 		await player.get_tree().process_frame
 
-func arrayToString(array: Array):
-	var s = ""
-	for i in array:
-		s+=String(i)
-	return s
+func searchNPC(id):
+	var npcs_node = get_tree().current_scene.get_node("Npcs")
+	for npc in npcs_node.get_children():
+		if npc.ID == id:
+			return npc
+	return null
+
+enum Types{array, string, int, float}
+
+func convertType(variable, newType:Types):
+	if variable == null:
+		return
+	
+	var intermediate = variable
+	
+	if typeof(variable) == TYPE_ARRAY:
+		intermediate = ""
+		for p in variable:
+			intermediate += str(p)
+	elif typeof(variable) != TYPE_STRING:
+		intermediate = str(variable)
+	
+	match newType:
+		Types.array:
+			return intermediate.split(",") if "," in intermediate else intermediate.split(" ")
+		Types.string:
+			return intermediate
+		Types.int:
+			return int(intermediate) if intermediate.is_valid_integer() else 0
+		Types.float:
+			return float(intermediate) if intermediate.is_valid_float() else 0.0
+	
+	return variable
 
 func wait():
 	pass

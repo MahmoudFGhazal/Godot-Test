@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+@export var ID: int
 @export var sprite: Texture
 
 @export var walk: bool

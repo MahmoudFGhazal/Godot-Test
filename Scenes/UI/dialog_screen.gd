@@ -17,7 +17,6 @@ func _process(_unusual_delta):
 			waitinput = false
 			box.text = ""
 			if index >= allText.size():
-				Global.inCut = false
 				visible = false
 				index = 0
 				Global.player.emitSignalText()
@@ -25,7 +24,7 @@ func _process(_unusual_delta):
 			else:
 				timer.start()
 		elif !timer.is_stopped():
-			box.text = Global.arrayToString(allText[index])
+			box.text = Global.convertType(allText[index], Global.Types.string)
 			letter = 0
 			index += 1
 			waitinput = true
@@ -65,7 +64,7 @@ func Texto(text):
 			boxName.append(i)
 		elif i == "]":
 			nameColor.append(i)
-			nameColor = Global.arrayToString(nameColor)
+			nameColor = Global.convertType(nameColor, Global.Types.string)
 			iscolor = false
 			currentBox.append(nameColor)
 			nameColor = []

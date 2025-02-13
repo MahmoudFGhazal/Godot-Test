@@ -60,6 +60,6 @@ bbcode_enabled = true
 scroll_active = false
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 0.1
+wait_time = 0.03
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
