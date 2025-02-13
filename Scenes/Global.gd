@@ -161,9 +161,7 @@ func executePlayerAction(action_data):
 						time += action_data[i]
 						i+=1
 					var timeWait: float = convertType(time, Types.float)
-					print("oi")
-					await player.ControlTimer(timeWait)
-					print("oi")
+					await wait(timeWait, searchTimerID())
 					continue
 				'<':
 					var text = []
@@ -217,5 +215,32 @@ func convertType(variable, newType:Types):
 	
 	return variable
 
-func wait():
-	pass
+var timers:Dictionary = {}
+
+func wait(time: float, id: int):
+	if timers.has(id):
+		if !timers[id].is_stopped():
+			await timers[id].timeout
+		return
+	else:
+		var new_timer = Timer.new()
+		add_child(new_timer)
+		new_timer.one_shot = true
+		timers[id] = new_timer
+	
+	var timer = timers[id]
+	timer.stop()
+	timer.wait_time = time
+	timer.start()
+	await timer.timeout
+	
+	timers.erase(id)
+	timer.queue_free()
+
+func searchTimerID():
+	var cont = 0
+	while(true):
+		if !timers.has(cont):
+			break
+		cont+=1
+	return cont

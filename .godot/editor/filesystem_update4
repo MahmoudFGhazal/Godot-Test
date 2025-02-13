@@ -1,0 +1,8 @@
+res://Scenes/Entities/Characters/Player/Player.tscn
+res://Scenes/Global.gd
+res://Scenes/Entities/Characters/NPC/NPC.tscn
+res://Scenes/Scenes/teste2.tscn
+res://Scenes/UI/DialogScreen.tscn
+res://Scenes/UI/menu.tscn
+res://Scenes/Entities/Triggers/scene_trigger.tscn
+res://Scenes/Scenes/teste.tscn
