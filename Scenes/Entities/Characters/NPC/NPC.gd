@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name NPC
 
 @export var ID: int
 @export var sprite: Texture
@@ -30,6 +31,8 @@ var rand = RandomNumberGenerator.new()
 var timer = 0
 var time
 
+var isBeUsing = false
+
 func _ready():
 	$Sprite2D.texture = sprite
 	
@@ -40,29 +43,69 @@ func _ready():
 	posinicial = position
 	updateAnimation()
 
-
 func _physics_process(delta):
-	if !walk:
+	updateAnimation()
+	if !walk or isBeUsing:
+		if state == States.walking:
+			move(delta)
 		return
 	
-	updateAnimation()
-
 	if state == States.idle:
 		timer += 1
 		if timer >= time:
 			if rand.randi_range(0, 1):
 				state = States.walking
 			else:
-				state = States.turning
+				turn()
 			timer = 0
 			time = rand.randi_range(100, 140)
 			
 	
 	if state == States.walking:
 		move(delta)
-	elif state == States.turning:
-		turn()
-		state = States.idle
+
+func statesControl(direc:Vector2):
+	dir = direc
+	
+	posinicial = position
+	if needtoturn():
+		state = States.turning
+		makeTurn()
+	else:
+		state = States.walking
+	updateAnimation()
+
+func makeTurn():
+	match dir:
+		Vector2(1,0):
+			facing = FaceStates.right
+		Vector2(-1,0):
+			facing = FaceStates.left
+		Vector2(0,1):
+			facing = FaceStates.down
+		Vector2(0,-1):
+			facing = FaceStates.up
+
+func turn():
+	facing = FaceStates.values()[randi_range(0, 3)]
+	if needtoturn():
+		state = States.turning
+
+func needtoturn():
+	var oldfacingdirection
+	if dir.x < 0:
+		oldfacingdirection = FaceStates.left
+	elif dir.x > 0:
+		oldfacingdirection = FaceStates.right
+	elif dir.y < 0:
+		oldfacingdirection = FaceStates.up
+	elif dir.y > 0:
+		oldfacingdirection = FaceStates.down
+		
+	if facing != oldfacingdirection:
+		return true
+	else:
+		return false
 
 func updateAnimation():
 	match facing:
@@ -74,7 +117,7 @@ func updateAnimation():
 			dir = Vector2(0, -1)
 		FaceStates.down:
 			dir = Vector2(0, 1)
-			
+	
 	match state:
 		States.idle:
 			anitree.set("parameters/Parado/blend_position", dir)
@@ -114,8 +157,9 @@ func move(delta):
 		nextTile = 0.0
 		state = States.idle
 
-func turn():
-	facing = FaceStates.values()[randi_range(0, 3)]
+
+func finishedturning():
+	state = States.idle
 
 func collision():
 	var nextstep:Vector2 = dir * 16 * (1 - nextTile)
@@ -135,5 +179,3 @@ func collision():
 func action():
 	if actions:
 		Global.cutScene(actions)
-	else:
-		print("Fudeu")

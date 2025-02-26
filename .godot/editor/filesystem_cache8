@@ -1,6 +1,6 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1739456690
-Bugs.txt::TextFile::-1::1738603293::0::1::::<><>::
+::res://::1740052779
+Bugs.txt::TextFile::-1::1739971704::0::1::::<><>::
 README.md::TextFile::-1::1735058261::0::1::::<><>::
 ::res://Assets/::1734868868
 ::res://Assets/Entities/::1734868868
@@ -27,10 +27,12 @@ option border.png::CompressedTexture2D::1422521698406467232::1738327148::1738327
 Sem título.png::CompressedTexture2D::7666476133795344424::1727879674::1728827104::1::::<><>::
 Seta-Text.png::CompressedTexture2D::8924828508044864334::1738546548::1738546549::1::::<><>::
 Text.png::CompressedTexture2D::8211254718431726770::1737552436::1737552437::1::::<><>::
-::res://Imports/::1738010331
+::res://Imports/::1739974979
 3e88f2decf0853631e34a747ba26ba50.jpg::CompressedTexture2D::3014384788976810449::1726319516::1726320138::1::::<><>::
 3698.png::CompressedTexture2D::7579527484935175729::1726332328::1726401548::1::::<><>::
+3865.png::CompressedTexture2D::8619583385604972276::1739974950::1739974979::1::::<><>::
 8002-66cdf22c5590ac9791a6b5052b635d0a.webp::CompressedTexture2D::2052875984173193456::1724267499::1724267501::1::::<><>::
+112720.png::CompressedTexture2D::4001193069353948138::1739974919::1739974979::1::::<><>::
 Game Boy Advance - Pokemon FireRed LeafGreen - Player Sprites.png::CompressedTexture2D::4441583854359188030::1726318793::1726318872::1::::<><>::
 houses.png::CompressedTexture2D::2050438542265891899::1721650323::1723741943::1::::<><>::
 maxresdefault.jpg::CompressedTexture2D::1943420981014576286::1727705033::1728827105::1::::<><>::
@@ -38,32 +40,32 @@ pokemon_fire_red.ttf::FontFile::4878241966666228061::1644048040::1723466478::1::
 pokemon_red_ds_style_sprites_by_pkmntrainerrick_demk7wr-fullview.jpg::CompressedTexture2D::4872742751612081139::1725210141::1725210780::1::::<><>::
 tiles red.png::CompressedTexture2D::6514255120421990010::1720872732::1723741943::1::::<><>::
 [GBA] Pokemon - Fire Red Version - Pokemon Club - 2.png::CompressedTexture2D::512991704539713144::1737551599::1737552341::1::::<><>::
-::res://Scenes/::1739224063
-Global.gd::GDScript::-1::1739224063::0::1::::global<>Node<>::
+::res://Scenes/::1739970590
+Global.gd::GDScript::-1::1739970590::0::1::::global<>Node<>::
 manager_scene.tscn::PackedScene::5804089672781286351::1736606405::0::1::::<><>::
 ::res://Scenes/Entities/::1736365147
 TileMap.tscn::PackedScene::755049337627363045::1736365147::0::1::::<><>::uid://cm4fbejrnct3u::::res://Assets/Entities/Objects/Tilesets/Overworld.png<>uid://csdrio01tqcaj::::res://Assets/Entities/Objects/Tilesets/OverOverWorld.png<>uid://cg2r4oqk7ovw1::::res://Assets/Entities/Objects/Tilesets/Building.png<>uid://d0fyjob7hurk3::::res://Scenes/Entities/Objects/Grass/tall_grass.tscn
 ::res://Scenes/Entities/Characters/::1734869057
-::res://Scenes/Entities/Characters/NPC/::1739224063
-NPC.gd::GDScript::-1::1739023899::0::1::::<>CharacterBody2D<>::
-NPC.json::JSON::-1::1739116803::0::1::::<><>::
-NPC.tscn::PackedScene::6394645944936889741::1739224063::0::1::::<><>::res://Scenes/Entities/Characters/NPC/NPC.gd
-::res://Scenes/Entities/Characters/Player/::1739224063
-Player.gd::GDScript::-1::1738684258::0::1::::Player<>CharacterBody2D<>::
-Player.tscn::PackedScene::2193712777950067402::1739224063::0::1::::<><>::res://Scenes/Entities/Characters/Player/Player.gd<>uid://cgpgpv366qh86::::res://Assets/Entities/Characters/Player/Red.png<>uid://do2ouv6t346i8::::res://Assets/Entities/Characters/Shadow.png<>uid://b4ikss0s8xe26::::res://Scenes/UI/menu.tscn<>uid://cqgnd44fy1rl6::::res://Scenes/UI/DialogScreen.tscn
+::res://Scenes/Entities/Characters/NPC/::1739971650
+NPC.gd::GDScript::-1::1739802203::0::1::::NPC<>CharacterBody2D<>::
+NPC.json::JSON::-1::1739802037::0::1::::<><>::
+NPC.tscn::PackedScene::6394645944936889741::1739971650::0::1::::<><>::res://Scenes/Entities/Characters/NPC/NPC.gd
+::res://Scenes/Entities/Characters/Player/::1739971650
+Player.gd::GDScript::-1::1739968846::0::1::::Player<>CharacterBody2D<>::
+Player.tscn::PackedScene::2193712777950067402::1739971650::0::1::::<><>::res://Scenes/Entities/Characters/Player/Player.gd<>uid://cgpgpv366qh86::::res://Assets/Entities/Characters/Player/Red.png<>uid://do2ouv6t346i8::::res://Assets/Entities/Characters/Shadow.png<>uid://b4ikss0s8xe26::::res://Scenes/UI/menu.tscn<>uid://cqgnd44fy1rl6::::res://Scenes/UI/DialogScreen.tscn
 ::res://Scenes/Entities/Objects/::1734962416
 ::res://Scenes/Entities/Objects/Grass/::1737712745
 tall_grass.gd::GDScript::-1::1735229732::0::1::::<>Node2D<>::
 tall_grass.tscn::PackedScene::8925779049107751300::1737712745::0::1::::<><>::res://Scenes/Entities/Objects/Grass/tall_grass.gd<>uid://di2y3277ke188::::res://Assets/Entities/Objects/Tilesets/Grass/TallGrass.png<>uid://cfks6p4qwtc00::::res://Assets/Entities/Objects/Tilesets/Grass/GrassOverlay.png<>uid://ck1sgep5osh2v::::res://Assets/Entities/Objects/Tilesets/Grass/Particulas.png
 ::res://Scenes/Entities/Objects/Water/::1725559937
-::res://Scenes/Entities/Triggers/::1739224063
-SceneTrigger.gd::GDScript::-1::1737382831::0::1::::<>Area2D<>::
-scene_trigger.tscn::PackedScene::127575226051732425::1739224063::0::1::::<><>::res://Scenes/Entities/Triggers/SceneTrigger.gd
-::res://Scenes/Scenes/::1739224064
-teste2.tscn::PackedScene::4899504798811391748::1739224063::0::1::::<><>::uid://cxdu5cof5bqf2::::res://Scenes/Entities/Characters/NPC/NPC.tscn<>uid://c46nfhkt3a0ft::::res://Assets/Entities/Characters/Principais/Garry/Garry.png<>uid://k00s1oxfa3u4::::res://Scenes/Entities/TileMap.tscn<>uid://b22e7ahgm0yv::::res://Scenes/Entities/Triggers/scene_trigger.tscn<>uid://d1xdpt4rq4l5l::::res://Assets/Entities/Objects/Tilesets/aniporta.png
-teste.tscn::PackedScene::85284409742957726::1739224064::0::1::::<><>::uid://cxdu5cof5bqf2::::res://Scenes/Entities/Characters/NPC/NPC.tscn<>uid://k00s1oxfa3u4::::res://Scenes/Entities/TileMap.tscn<>uid://c46nfhkt3a0ft::::res://Assets/Entities/Characters/Principais/Garry/Garry.png<>uid://b22e7ahgm0yv::::res://Scenes/Entities/Triggers/scene_trigger.tscn<>uid://d1xdpt4rq4l5l::::res://Assets/Entities/Objects/Tilesets/aniporta.png
-::res://Scenes/UI/::1739224063
-DialogScreen.tscn::PackedScene::5909045378643531017::1739224063::0::1::::<><>::res://Scenes/UI/dialog_screen.gd<>uid://do8ufvmebbr0e::::res://Assets/UI/Text.png<>uid://cbrb6x63pxyif::::res://Imports/pokemon_fire_red.ttf
-dialog_screen.gd::GDScript::-1::1739194685::0::1::::<>Control<>::
+::res://Scenes/Entities/Triggers/::1739971704
+SceneTrigger.gd::GDScript::-1::1739971704::0::1::::<>Area2D<>::
+scene_trigger.tscn::PackedScene::127575226051732425::1739971651::0::1::::<><>::res://Scenes/Entities/Triggers/SceneTrigger.gd
+::res://Scenes/Scenes/::1739971704
+teste2.tscn::PackedScene::4899504798811391748::1739971704::0::1::::<><>::uid://cxdu5cof5bqf2::::res://Scenes/Entities/Characters/NPC/NPC.tscn<>uid://c46nfhkt3a0ft::::res://Assets/Entities/Characters/Principais/Garry/Garry.png<>uid://k00s1oxfa3u4::::res://Scenes/Entities/TileMap.tscn<>uid://b22e7ahgm0yv::::res://Scenes/Entities/Triggers/scene_trigger.tscn<>uid://d1xdpt4rq4l5l::::res://Assets/Entities/Objects/Tilesets/aniporta.png
+teste.tscn::PackedScene::85284409742957726::1739971651::0::1::::<><>::uid://cxdu5cof5bqf2::::res://Scenes/Entities/Characters/NPC/NPC.tscn<>uid://k00s1oxfa3u4::::res://Scenes/Entities/TileMap.tscn<>uid://c46nfhkt3a0ft::::res://Assets/Entities/Characters/Principais/Garry/Garry.png<>uid://b22e7ahgm0yv::::res://Scenes/Entities/Triggers/scene_trigger.tscn<>uid://d1xdpt4rq4l5l::::res://Assets/Entities/Objects/Tilesets/aniporta.png
+::res://Scenes/UI/::1739971651
+DialogScreen.tscn::PackedScene::5909045378643531017::1739971651::0::1::::<><>::res://Scenes/UI/dialog_screen.gd<>uid://do8ufvmebbr0e::::res://Assets/UI/Text.png<>uid://cbrb6x63pxyif::::res://Imports/pokemon_fire_red.ttf
+dialog_screen.gd::GDScript::-1::1739970555::0::1::::<>Control<>::
 menu.gd::GDScript::-1::1738327532::0::1::::<>Control<>::
-menu.tscn::PackedScene::4439052470349730445::1739224063::0::1::::<><>::uid://bxq4ex3tg3mb7::::res://Assets/UI/Menu.png<>res://Scenes/UI/menu.gd<>uid://cbrb6x63pxyif::::res://Imports/pokemon_fire_red.ttf<>uid://ujcyvtkr8v25::::res://Assets/UI/option border.png
+menu.tscn::PackedScene::4439052470349730445::1739971651::0::1::::<><>::uid://bxq4ex3tg3mb7::::res://Assets/UI/Menu.png<>res://Scenes/UI/menu.gd<>uid://cbrb6x63pxyif::::res://Imports/pokemon_fire_red.ttf<>uid://ujcyvtkr8v25::::res://Assets/UI/option border.png

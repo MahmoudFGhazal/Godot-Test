@@ -22,7 +22,6 @@ var jumping = false
 @onready var camera = $Camera2D
 @onready var sprite = $Sprite2D
 @onready var collisionShape = $CollisionShape2D
-@onready var timer = $Timer
 @onready var fadeAni = $Camera2D/Transition/AnimationFade
 @onready var texto = $UI/Texto
 
@@ -30,10 +29,10 @@ var hasFadedtoBlack = false
 var hasFadedtoNormal = false
 
 enum collisions {world, ledge, interect, action, water}
-enum State {Idle, Turn, Walk, Run, Swim}
-enum Facing {left, right, up, down}
-var playerstate = State.Idle
-var facingstate = Facing.down 
+enum States {Idle, Turn, Walk, Run, Swim}
+enum FaceStates {left, right, up, down}
+var playerstate = States.Idle
+var facingstate = FaceStates.down 
 
 var posinicial = Vector2(0,0)
 var dir = Vector2(0,1)
@@ -48,35 +47,35 @@ func _physics_process(delta):
 	updateAnimation()
 	if entering_trigger:
 		transition(delta)
-	elif playerstate == State.Turn:
+	elif playerstate == States.Turn:
 		pass
-	elif playerstate == State.Idle:
+	elif playerstate == States.Idle:
 		inputPlayer()
-	elif playerstate == State.Walk or playerstate == State.Run:
+	elif playerstate == States.Walk or playerstate == States.Run:
 		move(delta)
 	else:
-		playerstate = State.Idle
+		playerstate = States.Idle
 
 func updateAnimation():
 	var blendPosition = getDirectionFace()
 
-	if (TestCollision(collisions.world) or (TestCollision(collisions.water) and playerstate != State.Swim)) and playerstate != State.Turn:
+	if (TestCollision(collisions.world) or (TestCollision(collisions.water) and playerstate != States.Swim)) and playerstate != States.Turn:
 		anitree.set("parameters/Parado/blend_position", blendPosition)
 		anistate.travel("Parado")
 		return
 	
 	
 	match playerstate:
-		State.Idle:
+		States.Idle:
 			anitree.set("parameters/Parado/blend_position", blendPosition)
 			anistate.travel("Parado")
-		State.Walk:
+		States.Walk:
 			anitree.set("parameters/Walk/blend_position", blendPosition)
 			anistate.travel("Walk")
-		State.Turn:
+		States.Turn:
 			anitree.set("parameters/Turn/blend_position", blendPosition)
 			anistate.travel("Turn")
-		State.Run:
+		States.Run:
 			anitree.set("parameters/Run/blend_position", blendPosition)
 			anistate.travel("Run")
 		_:
@@ -94,7 +93,6 @@ func inputPlayer():
 	
 	if Input.is_action_just_pressed("Teste"):
 		fadeAni.play("FadetoBlack")
-		await ControlTimer(1.0)
 		fadeAni.play("FadetoNormal")
 	
 	if inputdir != Vector2.ZERO:
@@ -108,7 +106,7 @@ func inputPlayer():
 				var collider = action_ray.get_collider()
 				if collider and collider.has_method("action"):
 					collider.action()
-		playerstate = State.Idle
+		playerstate = States.Idle
 		
 	updateAnimation()
 
@@ -118,34 +116,34 @@ func statesControl(direc:Vector2, run:bool = false):
 	posinicial = position
 	if run:
 		needtoturn()
-		playerstate = State.Run
+		playerstate = States.Run
 	else:
 		if needtoturn():
-			playerstate = State.Turn
+			playerstate = States.Turn
 			return
-		playerstate = State.Walk
+		playerstate = States.Walk
 		
 
 func needtoturn():
 	var oldfacingdirection
 	if dir.x < 0:
-		oldfacingdirection = Facing.left
+		oldfacingdirection = FaceStates.left
 	elif dir.x > 0:
-		oldfacingdirection = Facing.right
+		oldfacingdirection = FaceStates.right
 	elif dir.y < 0:
-		oldfacingdirection = Facing.up
+		oldfacingdirection = FaceStates.up
 	elif dir.y > 0:
-		oldfacingdirection = Facing.down
+		oldfacingdirection = FaceStates.down
 		
 	if facingstate != oldfacingdirection:
 		facingstate = oldfacingdirection
 		return true
 	else:
-		facingstate = oldfacingdirection
+		
 		return false
 
 func finishedturning():
-	playerstate = State.Idle
+	playerstate = States.Idle
 
 func move(delta):
 	
@@ -156,7 +154,7 @@ func move(delta):
 				entering_trigger = true
 				hasFadedtoBlack = false
 				hasFadedtoNormal = false
-	elif (TestCollision(collisions.ledge) and facingstate == Facing.down) or jumping:
+	elif (TestCollision(collisions.ledge) and facingstate == FaceStates.down) or jumping:
 		#se o player começar o pulo antes de terminar o movimento
 		if !jumping:
 			position.x = ceil(position.x / 80) * 80
@@ -171,7 +169,7 @@ func move(delta):
 			shadow.visible = false
 			position = posinicial
 			jumping = false
-			playerstate = State.Idle
+			playerstate = States.Idle
 			ray.position = Vector2(8,8)
 			return
 		collisionShape.global_position = Vector2(TileSize/2.0,TileSize/2.0) + posinicial + (2 * TileSize * dir)
@@ -181,7 +179,7 @@ func move(delta):
 		if nextTile >= 2.0:
 			position = posinicial + (2 * TileSize * dir)
 			nextTile = 0.0
-			playerstate = State.Idle
+			playerstate = States.Idle
 			shadow.visible = false
 			jumping = false
 			sprite.position = Vector2(8, -1)
@@ -194,18 +192,18 @@ func move(delta):
 			position = posinicial + TileSize * dir * nextTile
 			var input = dir.y * 8 * nextTile 
 			sprite.position.y = (- 5 - 1.2 * input + 0.087 * pow(input, 2))
-	elif !TestCollision(collisions.world) and (!TestCollision(collisions.water) or playerstate == State.Swim) or (playerstate == State.Walk and nextTile != 0):
-		nextTile += run_spd * delta if playerstate == State.Run else spd * delta
+	elif !TestCollision(collisions.world) and (!TestCollision(collisions.water) or playerstate == States.Swim) or (playerstate == States.Walk and nextTile != 0):
+		nextTile += run_spd * delta if playerstate == States.Run else spd * delta
 		
 		if nextTile >= 1.0:
 			position = posinicial + (TileSize * dir)
 			nextTile = 0.0
-			playerstate = State.Idle
+			playerstate = States.Idle
 			return
 		else:
 			position = posinicial + (TileSize * dir * nextTile)
 	else:
-		playerstate = State.Idle
+		playerstate = States.Idle
 		nextTile = 0.0
 		posinicial = position
 		
@@ -245,13 +243,13 @@ func TestCollision(type:collisions):
 
 func getDirectionFace():
 	match facingstate:
-		Facing.left:
+		FaceStates.left:
 			return Vector2(-1, 0)
-		Facing.right:
+		FaceStates.right:
 			return Vector2(1, 0)
-		Facing.up:
+		FaceStates.up:
 			return Vector2(0, -1)
-		Facing.down:
+		FaceStates.down:
 			return Vector2(0, 1)
 
 func transition(delta):
@@ -259,7 +257,7 @@ func transition(delta):
 	if nextTile >= 1:
 		fadeBlack()
 		
-		await ControlTimer(1.0)
+		await Global.wait(1.0)
 		
 		fadeNormal()
 		
@@ -277,26 +275,19 @@ func fadeBlack():
 		sprite.visible = false
 
 func fadeNormal():
+	var waitID = Global.searchTimerID()
 	if !hasFadedtoNormal:
 		hasFadedtoNormal = true
-		facingstate = Facing.down
-		playerstate = State.Idle
+		facingstate = FaceStates.down
+		playerstate = States.Idle
 		updateAnimation()
 		emit_signal("Player_entered_trigger")
 		sprite.visible = true
-		await ControlTimer(1.0)
+		await Global.wait(1.0,waitID)
 		fadeAni.play("FadetoNormal")
-		await ControlTimer(0.5)
+		await Global.wait(0.5,waitID)
 		Global.inCut = false
-
-func ControlTimer(time: float):
-	if !timer.is_stopped():
-		await timer.timeout
-		return
-	timer.stop()
-	timer.wait_time = time
-	timer.start()
-	await timer.timeout
+	emit_signal("textFinished")
 
 func callDialog(text):
 	texto.process_mode = Node.PROCESS_MODE_INHERIT

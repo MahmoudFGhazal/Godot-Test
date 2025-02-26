@@ -4,12 +4,16 @@
             {
                 "character": "player",
                 "action": "d<(Charles)O Rato Roeu a Roupa do Rei de Roma>"
+            },
+            {
+                "character": "1",
+                "action": "dd"
             }
         ],
         [
             {
                 "character": "player",
-                "action": "de7.6"
+                "action": "d"
             }
         ]
     ],

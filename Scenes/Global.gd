@@ -128,9 +128,11 @@ func executeAction(action_data):
 	if character == "player":
 		await executePlayerAction(action)
 	elif character.is_valid_int():
-		var NPC = searchNPC(character)
-		print(NPC)
-		await player.ControlTimer(0.1)
+		var npc:NPC = searchNPC(character)
+		npc.isBeUsing = true
+		await wait(0.1, searchTimerID())
+		await executeNPCAction(npc, action)
+		npc.isBeUsing = false
 	
 	emit_signal("completed")
 
@@ -173,17 +175,44 @@ func executePlayerAction(action_data):
 					await player.callDialog(text)
 		i+=1
 
-func executeNPCAction(NPC, action_data):
-	pass
-
 func controlPlayer(dir:Vector2, run:bool = false):
 	player.statesControl(dir, run)
-	while player.playerstate != player.State.Idle:
+	while player.playerstate != player.States.Idle:
 		await player.get_tree().process_frame
 
+func executeNPCAction(npc, action_data):
+	var i = 0
+	while i < action_data.length():
+		match action_data[i]:
+				'd':
+					await controlNPC(npc, Vector2(1,0))
+				'a':
+					await controlNPC(npc, Vector2(-1,0))
+				's':
+					await controlNPC(npc, Vector2(0,1))
+				'w':
+					await controlNPC(npc, Vector2(0,-1))
+				'e':
+					var time = ""
+					i+=1
+					while i < action_data.length() and (action_data[i].is_valid_int() or action_data[i] == "."):
+						time += action_data[i]
+						i+=1
+					var timeWait: float = convertType(time, Types.float)
+					await wait(timeWait, searchTimerID())
+					continue
+		i+=1
+
+func controlNPC(npc:NPC, dir:Vector2):
+	npc.statesControl(dir)
+	
+	while npc.state != npc.States.idle:
+		await npc.get_tree().process_frame
+
 func searchNPC(id):
-	var npcs_node = get_tree().current_scene.get_node("Npcs")
-	for npc in npcs_node.get_children():
+	var npcs_node = get_tree().current_scene.get_child(0).get_node("Npcs")
+	id = convertType(id, Types.int)
+	for npc:NPC in npcs_node.get_children():
 		if npc.ID == id:
 			return npc
 	return null
@@ -209,7 +238,7 @@ func convertType(variable, newType:Types):
 		Types.string:
 			return intermediate
 		Types.int:
-			return int(intermediate) if intermediate.is_valid_integer() else 0
+			return int(intermediate)
 		Types.float:
 			return float(intermediate) if intermediate.is_valid_float() else 0.0
 	
@@ -217,10 +246,9 @@ func convertType(variable, newType:Types):
 
 var timers:Dictionary = {}
 
-func wait(time: float, id: int):
+func wait(time: float, id: int = searchTimerID()):
 	if timers.has(id):
-		if !timers[id].is_stopped():
-			await timers[id].timeout
+		await timers[id].timeout
 		return
 	else:
 		var new_timer = Timer.new()

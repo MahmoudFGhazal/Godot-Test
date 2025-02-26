@@ -6,11 +6,13 @@ var waitinput = false
 var allText: Array
 var already = false
 
+
+
 func _process(_unusual_delta):
 	if !already:
-		await Global.player.ControlTimer(0.3)
+		await Global.wait(0.3,50)
 		already = true
-
+		
 	if Input.is_action_just_pressed("Avançar") and already: 
 		already = false
 		if waitinput:

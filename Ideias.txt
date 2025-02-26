@@ -1,0 +1,30 @@
+Bulbasaur:
+- aprender lv bullet seed
+- aprender tm needle arm
+- aprender tm strggle
+
+Ivysaur:
+- aprender lv bullet seed
+- aprender lv leaf blade
+- aprender lv magical leaf
+- aprender tm needle arm
+- aprender tm strggle
+- aprender tm crunch
+
+
+Venusaur
+- aprender lv bullet seed
+- aprender lv leaf blade
+- aprender lv magical leaf
+- aprender tm needle arm
+- aprender lv Frenzy Plant
+- aprender lv solar beam
+- aprender tm poison fang
+- aprender tm secret power
+- aprender tm slack off
+- aprender tm smelling salts
+- aprender tm strggle
+- aprender tm take down 
+- aprender tm superpower
+- aprender tm crunch
+

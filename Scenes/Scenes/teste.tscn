@@ -27,4 +27,6 @@ pos = Vector2i(560, 80)
 position = Vector2(320, 7.62939e-06)
 ID = 1
 sprite = ExtResource("2_hcncp")
+walk = true
+dist = 2
 actions = "res://Scenes/Entities/Characters/NPC/NPC.json"

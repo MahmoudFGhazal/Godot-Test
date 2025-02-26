@@ -1,11 +1,15 @@
 Parar Animação Arvore no pause
 Talvez tira o *9 no raycast
 Melhorar a movimentação/Refazer talvez 
+colocar 2 raycast no player para parar de dar bug quando o player e no NPC se encontram
+Melhorar a Animação q fica reiniciando
+Colocar imagens nos pokemons e baixar todas as imagens dos itens
+analisar todos os ataques dos pokemons
 
-9 - Cutscene - fazer o player andar para fora da porta 
 6 - Resto do Menu
 7 - Combate
 8 - Achar Pokemons
+9 - Resto Cutscene - fazer o player andar para fora da porta 
 
 Lista de Prioridade
 0 - Sombras/Tilemap.Floor/Grass

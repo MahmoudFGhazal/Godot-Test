@@ -64,6 +64,6 @@ func _on_body_exited(body: Node2D) -> void:
 			animatedSprite.play("closing")
 
 func _change_scene():
-	#print(connectedScene, " e ", get_owner().name)
 	Global.changeScene(get_owner(), connectedScene, pos)
 	position = Vector2i(0,0)
+	Global.wait(5,51)
